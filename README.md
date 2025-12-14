@@ -22,7 +22,7 @@ make setup
 	
 ## Prerequisites
     Linux, Macos, WSL
-    PHP >=8.2
+    PHP >=8.4
     Make
     Git
 
