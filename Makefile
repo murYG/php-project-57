@@ -4,8 +4,7 @@ setup:
 	composer install
 	cp -n .env.example .env
 	php artisan key:gen --ansi
-	php artisan migrate:refresh --seed --force
-	php artisan db:seed
+	php artisan migrate
 	make ide-helper
 	
 validate:
