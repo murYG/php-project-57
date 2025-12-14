@@ -31,6 +31,6 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
-        <env name="ROLLBAR_TOKEN" value="2a4ef71827304b8f9615b3e8306aa4ea"/>
+		<env name="ROLLBAR_TOKEN" value=""/>		
     </php>
 </phpunit>
