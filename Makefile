@@ -18,7 +18,7 @@ lint:
 	composer exec --verbose phpcs -- --standard=PSR12 src public
 
 start:
-	php artisan serve --host 0.0.0.0
+	php artisan migrate:refresh --seed --force && php artisan serve --host=0.0.0.0
 	
 migrate:
 	php artisan migrate
