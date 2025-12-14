@@ -2,12 +2,14 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "hexlet/code",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "test project #4",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
         "php": "^8.4",
+        "laravel/breeze": "*",
         "laravel/framework": "^12.0",
+        "laravel/sanctum": "*",
         "laravel/tinker": "^2.10.1",
         "rollbar/rollbar-laravel": "^8.1"
     },
