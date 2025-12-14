@@ -20,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-		class_exists(\Psr\Log\AbstractLogger::class);
+		if (env('APP_ENV') == 'production') {
+            $url->forceScheme('https');
+        }
     }
 }
