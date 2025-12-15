@@ -1,0 +1,61 @@
+# Exported from Render on 2025-12-15T18:58:27Z
+version: "1"
+projects:
+- name: php-project-57
+  environments:
+  - name: Production
+    services:
+    - type: web
+      name: php-project-57
+      runtime: docker
+      repo: https://github.com/murYG/php-project-57
+      plan: free
+      envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PORT
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: MAIL_MAILER
+        sync: false
+      - key: MAIL_HOST
+        sync: false
+      - key: MAIL_FROM_ADDRESS
+        sync: false
+      - key: APP_FALLBACK_LOCALE
+        sync: false
+      - key: APP_FAKER_LOCALE
+        sync: false
+      - key: APP_DEBUG
+        sync: false
+      - key: APP_NAME
+        sync: false
+      - key: APP_LOCALE
+        sync: false
+      - key: APP_KEY
+        sync: false
+      - key: ROLLBAR_TOKEN
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_HOST
+        sync: false
+      - key: DB_DATABASE
+        sync: false
+      - key: APP_ENV
+        sync: false
+      - key: DB_URL
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_CONNECTION
+        sync: false
+      region: virginia
+      dockerContext: .
+      dockerfilePath: ./Dockerfile
+      autoDeployTrigger: "off"
