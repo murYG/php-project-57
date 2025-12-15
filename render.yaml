@@ -35,8 +35,6 @@ projects:
         sync: false
       - key: APP_LOCALE
         sync: false
-      - key: APP_KEY
-        sync: true
       - key: ROLLBAR_TOKEN
         sync: false
       - key: DB_USERNAME
