@@ -2,7 +2,7 @@ install: setup
 
 setup:
 	composer install
-	#cp -n .env.example .env
+	cp -n .env.example .env
 	php artisan key:gen --ansi
 	php artisan migrate
 	#php artisan db:seed
