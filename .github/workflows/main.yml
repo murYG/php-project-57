@@ -4,11 +4,12 @@ on: push
 
 jobs:
   build-main:
+    name: base
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
         with:
           php-version: '8.4.15'
-      - uses: actions/checkout@v4
       - run: make setup
       - run: make lint
       - run: make test
