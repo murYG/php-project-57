@@ -23,5 +23,8 @@ class AppServiceProvider extends ServiceProvider
         //
 		print_r(env('APP_ENV'));
 		print_r(env('APP_NAME'));
+		if (env('APP_ENV') == 'production') {
+            $url->forceScheme('https');
+        }
     }
 }
