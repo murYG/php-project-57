@@ -5,7 +5,7 @@ setup:
 	cp -n .env.example .env
 	php artisan key:gen --ansi
 	php artisan migrate
-	#php artisan db:seed
+	php artisan db:seed
 	npm ci
 	npm run build
 	make ide-helper
@@ -14,7 +14,7 @@ validate:
 	composer validate	
 
 lint:
-	composer exec --verbose phpcs -- --standard=PSR12 public
+	composer exec --verbose phpcs -- --standard=PSR12 app routes
 
 start:
 	php artisan serve --host=0.0.0.0
@@ -26,6 +26,7 @@ console:
 	php artisan tinker
 	
 test:
+	php artisan key:gen --env=testing
 	php artisan test
 	
 test-coverage:

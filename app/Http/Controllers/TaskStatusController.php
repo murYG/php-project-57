@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\TaskStatus;
+use Illuminate\Http\Request;
+
+class TaskStatusController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $task_statuses = TaskStatus::paginate();
+        return view('task_status.index', compact('task_statuses'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $task_status = new TaskStatus();
+        return view('task_status.create', compact('task_status'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $data = $request->validate(
+            [
+                'name' => 'required|unique:task_statuses'
+            ],
+            [
+                'name.required' => __('validation.task_status.name.required'),
+                'name.unique' => __('validation.task_status.name.unique')
+            ]
+        );
+
+        $task_status = new TaskStatus($data);
+        $task_status->save();
+        flash(__('controllers.task_status.flash.store_success'))->success();
+
+        return redirect()->route('task_status.index');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(TaskStatus $taskStatus)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(TaskStatus $task_status)
+    {
+        return view('task_status.edit', compact('task_status'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, TaskStatus $task_status)
+    {
+        $data = $request->validate(
+            [
+                'name' => "required|unique:task_statuses,name,{$task_status->id}"
+            ],
+            [
+                'name.required' => __('validation.task_status.name.required'),
+                'name.unique' => __('validation.task_status.name.unique')
+            ]
+        );
+
+        $task_status->fill($data);
+        $task_status->save();
+        flash(__('controllers.task_status.flash.update_success'))->success();
+
+        return redirect()->route('task_status.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(TaskStatus $taskStatus)
+    {
+        try {
+            $taskStatus->delete();
+            flash(__('controllers.task_status.flash.destroy_success'))->success();
+        } catch (\Exception $e) {
+            flash(__('controllers.task_status.flash.destroy_error'))->error();
+        }
+
+        return redirect()->route('task_status.index');
+    }
+}

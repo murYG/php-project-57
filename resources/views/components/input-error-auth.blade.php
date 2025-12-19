@@ -2,6 +2,9 @@
 
 @if ($messages)
     <div class="mb-4">
+        <div {{ $attributes->merge(['class' => 'font-medium text-red-600']) }}>
+                Упс! Что-то пошло не так: 
+        </div>
         <ul {{ $attributes->merge(['class' => 'text-sm text-red-600 space-y-1']) }}>
             @foreach ((array) $messages as $message)
                 <li>{{ $message }}</li>

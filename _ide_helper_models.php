@@ -15,6 +15,24 @@ namespace App\Models{
 /**
  * @property int $id
  * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\TaskStatusFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TaskStatus newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TaskStatus newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TaskStatus query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TaskStatus whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TaskStatus whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TaskStatus whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TaskStatus whereUpdatedAt($value)
+ */
+	class TaskStatus extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property string $name
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password

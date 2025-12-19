@@ -12,6 +12,7 @@ jobs:
         with:
           php-version: 8.4
       - run: make install
+      - run: make lint
       - run: make test
 
   SonarQube:
