@@ -12,7 +12,7 @@ class TaskStatusController extends Controller
      */
     public function index()
     {
-        $task_statuses = TaskStatus::paginate();
+        $task_statuses = TaskStatus::orderBy('id')->paginate();
         return view('task_status.index', compact('task_statuses'));
     }
 
@@ -35,14 +35,13 @@ class TaskStatusController extends Controller
                 'name' => 'required|unique:task_statuses'
             ],
             [
-                'name.required' => __('validation.task_status.name.required'),
                 'name.unique' => __('validation.task_status.name.unique')
             ]
         );
 
         $task_status = new TaskStatus($data);
         $task_status->save();
-        flash(__('controllers.task_status.flash.store_success'))->success();
+        flash(__('flash.task_status.store_success'))->success();
 
         return redirect()->route('task_status.index');
     }
@@ -73,14 +72,13 @@ class TaskStatusController extends Controller
                 'name' => "required|unique:task_statuses,name,{$task_status->id}"
             ],
             [
-                'name.required' => __('validation.task_status.name.required'),
                 'name.unique' => __('validation.task_status.name.unique')
             ]
         );
 
         $task_status->fill($data);
         $task_status->save();
-        flash(__('controllers.task_status.flash.update_success'))->success();
+        flash(__('flash.task_status.update_success'))->success();
 
         return redirect()->route('task_status.index');
     }
@@ -88,13 +86,13 @@ class TaskStatusController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TaskStatus $taskStatus)
+    public function destroy(TaskStatus $task_status)
     {
         try {
-            $taskStatus->delete();
-            flash(__('controllers.task_status.flash.destroy_success'))->success();
+            $task_status->delete();
+            flash(__('flash.task_status.destroy_success'))->success();
         } catch (\Exception $e) {
-            flash(__('controllers.task_status.flash.destroy_error'))->error();
+            flash(__('flash.task_status.destroy_error'))->error();
         }
 
         return redirect()->route('task_status.index');

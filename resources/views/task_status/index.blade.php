@@ -1,18 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __("controllers.task_status.index") }}
+            {{ __("views.task_status.index.title") }}
         </h2>
     </x-slot>
-    
+
     @auth
     <div>
         <a href="{{ route('task_status.create') }}">
-            {{ __("controllers.task_status.create") }}
+            {{ __("views.task_status.index.buttons.create") }}
         </a>
     </div>
     @endauth
-    
+
     <div>
         <table class="mt-4">
             <thead class="border-b-2 border-solid border-black text-left">
@@ -21,7 +21,7 @@
                     <td>{{ __('models.task_status.name') }}</td>
                     <td>{{ __('models.task_status.created_at') }}</td>
                     @auth
-                    <td>{{ __("views.task_status.index.actions") }}</td>
+                    <td>{{ __("views.common.actions.title") }}</td>
                     @endauth
                 </tr>
             </thead>
@@ -29,18 +29,18 @@
                 @foreach($task_statuses as $task_status)
                     <tr>
                         <td>{{ $task_status->id }}</td>
-                        <td><a class="text-decoration-none" href="{{ route('task_status.show', $task_status->id) }}">{{ $task_status->name }}</a></td>
+                        <td>{{ $task_status->name }}</td>
                         <td>{{ $task_status->created_at->format('d.m.Y') }}</td>
                         @auth
                         <td>
-                            <a class="text-decoration-none" href="{{ route('task_status.edit', $task_status->id)}}">{{ __('controllers.task_status.edit') }}</a>
+                            <a class="text-decoration-none" href="{{ route('task_status.edit', $task_status->id)}}">{{ __('views.common.actions.actions.edit') }}</a>
                             <form method="POST" action="{{ route('task_status.destroy', ['task_status' => $task_status]) }}">
                                 @csrf
                                 @method('DELETE')
                                 <a class="text-decoration-none link-danger" 
                                     href="{{ route('task_status.destroy', ['task_status' => $task_status]) }}" 
-                                    onclick="event.preventDefault(); if (confirm({{ __('views.task_status.index.confirm_deletion') }})) this.closest('form').submit();">
-                                     {{ __('controllers.task_status.destroy') }}
+                                    onclick="event.preventDefault(); if (confirm('{{ __('views.task_status.index.confirm_deletion') }}')) this.closest('form').submit();">
+                                     {{ __('views.common.actions.actions.delete') }}
                                 </a>
                             </form>     
                         </td>

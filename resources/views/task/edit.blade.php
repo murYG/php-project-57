@@ -1,19 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __("views.task_status.edit.title") }}
+            {{ __("views.task.edit.title") }}
         </h2>
     </x-slot>
     
-    <form method="POST" action="{{ route('task_status.update', $task_status) }}">
+    <form method="POST" action="{{ route('tasks.update', $task) }}">
         @csrf
         @method('PATCH')
 
-        @include('task_status.form')
+        @include('task.form')
 
         <div class="flex items-center mt-4">
             <x-primary-button class="ms-3">
-                {{ __('views.task_status.edit.buttons.edit') }}
+                {{ __('views.task.edit.buttons.edit') }}
             </x-primary-button>
         </div>
     </form>

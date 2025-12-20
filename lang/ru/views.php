@@ -1,14 +1,62 @@
 <?php
 
 return [
+    'common' => [
+        'actions' => [
+            'title' => 'Действия',
+            'actions' => [
+                'delete' => 'Удалить',
+                'edit' => 'Изменить',
+            ],
+        ],
+    ],
     'index' => [
-        'header' => 'Привет от Хекслета!',
-        'description' => 'Это простой менеджер задач на Laravel',
+        'title' => 'Привет от Хекслета!',
+        'content' => 'Это простой менеджер задач на Laravel',
     ],
     'task_status' => [
         'index' => [
-            'actions' => 'Действия',
-            'confirm_deletion' => 'Вы уверены?'
+            'title' => 'Статусы',            
+            'confirm_deletion' => 'Вы уверены?',
+            'buttons' => [
+                'create' => 'Создать статус'
+            ]
+        ],
+        'create' => [
+            'title' => 'Создать статус',
+            'buttons' => [
+                'create' => 'Создать'
+            ]
+        ],
+        'edit' => [
+            'title' => 'Изменение статуса',
+            'buttons' => [
+                'edit' => 'Обновить'
+            ]
+        ]
+    ],
+    'task' => [
+        'index' => [
+            'title' => 'Задачи',            
+            'confirm_deletion' => 'Вы уверены?',
+            'buttons' => [
+                'create' => 'Создать задачу'
+            ]
+        ],
+        'show' => [
+            'title' => 'Просмотр задачи'
+        ],        
+        'create' => [
+            'title' => 'Создать задачу',
+            'buttons' => [
+                'create' => 'Создать'
+            ]
+        ],
+        'edit' => [
+            'title' => 'Изменение задачи',
+            'buttons' => [
+                'edit' => 'Обновить'
+            ]
         ]
     ]
 ];

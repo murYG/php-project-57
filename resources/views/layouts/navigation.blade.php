@@ -11,6 +11,9 @@
                     <x-nav-link :href="route('task_status.index')" :active="request()->routeIs('task_status.index')">
                         {{ __('layouts.navigation.task_status') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
+                        {{ __('layouts.navigation.task') }}
+                    </x-nav-link>
                 </div>
             </div>
 

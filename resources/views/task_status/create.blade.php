@@ -1,7 +1,7 @@
 <x-app-layout> 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __("controllers.task_status.create") }}
+            {{ __("views.task_status.create.title") }}
         </h2>
     </x-slot>
     
@@ -10,9 +10,9 @@
 
         @include('task_status.form')
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="flex items-center mt-4">
             <x-primary-button class="ms-3">
-                {{ __('controllers.task_status.store') }}
+                {{ __('views.task_status.create.buttons.create') }}
             </x-primary-button>
         </div>
     </form>

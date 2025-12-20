@@ -22,7 +22,7 @@ class TaskStatusTest extends TestCase
         $response->assertOk();
     }
     
-    public function test_user_can_add_updated_delete_task_status(): void
+    public function test_user_can_add_update_delete_task_status(): void
     {
         $user = User::factory()->create();
 
@@ -62,7 +62,7 @@ class TaskStatusTest extends TestCase
             ->assertRedirect('/task_status');
     }
     
-    public function test_guest_can_not_add_updated_delete_task_status(): void
+    public function test_guest_can_not_add_update_delete_task_status(): void
     {
         $rowsCount = TaskStatus::query()->count();
         $response = $this->post('/task_status', [

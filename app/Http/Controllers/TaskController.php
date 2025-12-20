@@ -1,0 +1,112 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Task;
+use App\Models\TaskStatus;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
+class TaskController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $tasks = Task::with('status', 'author', 'responsible')->orderBy('id')->paginate();
+        return view('task.index', compact('tasks'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $task = new Task();
+        $statuses = TaskStatus::all();
+        $users = User::all();
+        return view('task.create', compact('task', 'statuses', 'users'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $data = $request->validate(
+            [
+                'name' => 'required',
+                'status_id' => 'required',
+                'description' => 'nullable|string',
+                'assigned_to_id' => 'nullable|integer:users'
+            ]
+        );
+
+        $task = new Task($data);
+        $task->save();
+        flash(__('flash.task.store_success'))->success();
+
+        return redirect()->route('tasks.index');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Task $task)
+    {
+        return view('task.show', compact('task'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Task $task)
+    {
+        $statuses = TaskStatus::all();
+        $users = User::all();
+        return view('task.edit', compact('task', 'statuses', 'users'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Task $task)
+    {
+        $data = $request->validate(
+            [
+                'name' => 'required',
+                'status_id' => 'required',
+                'description' => 'nullable|string',
+                'assigned_to_id' => 'nullable|integer:users'
+            ]
+        );
+
+        $task->fill($data);
+        $task->save();
+        flash(__('flash.task.update_success'))->success();
+
+        return redirect()->route('tasks.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Task $task)
+    {
+        if (!Gate::allows('destroy-task', $task)) {
+            flash(__('flash.task.destroy_auth_error'))->error();
+            return redirect()->route('tasks.index');
+        }
+
+        try {
+            $task->delete();
+            flash(__('flash.task.destroy_success'))->success();
+        } catch (\Exception $e) {
+            flash(__('flash.task.destroy_error'))->error();
+        }
+
+        return redirect()->route('tasks.index');
+    }
+}
