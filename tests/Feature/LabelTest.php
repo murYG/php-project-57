@@ -38,11 +38,11 @@ class LabelTest extends TestCase
         $this->assertEquals($rowsCount + 1, Label::query()->count());
         
         $label = Label::first();
-        $expexted = $label->name . ' new name';
+        $expexted = "{$label->name} new name";
         
         $response2 = $this
             ->actingAs($user)
-            ->patch('/labels/' . $label->id, [
+            ->patch("/labels/{$label->id}", [
                 'name' => $expexted,
             ]);
         $response2
@@ -53,7 +53,7 @@ class LabelTest extends TestCase
         
         $response3 = $this
             ->actingAs($user)
-            ->delete('/labels/' . $label->id);
+            ->delete("/labels/{$label->id}");
         $response3
             ->assertSessionHasNoErrors()
             ->assertRedirect('/labels');
@@ -71,7 +71,7 @@ class LabelTest extends TestCase
         
         $response = $this
             ->actingAs($user)
-            ->delete('/labels/' . $label->id);
+            ->delete("/labels/{$label->id}");
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect('/labels');
@@ -93,8 +93,8 @@ class LabelTest extends TestCase
         $label = Label::factory()->create();
         $expexted = $label->name;
         
-        $response2 = $this->patch('/labels/' . $label->id, [
-                'name' => $expexted . ' new name',
+        $response2 = $this->patch("/labels/{$label->id}", [
+                'name' => "$expexted new name",
             ]);
         $response2
             ->assertSessionHasNoErrors()
@@ -102,7 +102,7 @@ class LabelTest extends TestCase
         $label->refresh();
         $this->assertSame($expexted, $label->name);
         
-        $response3 = $this->delete('/labels/' . $label->id);
+        $response3 = $this->delete("/labels/{$label->id}");
         $response3
             ->assertSessionHasNoErrors()
             ->assertRedirect('/login');

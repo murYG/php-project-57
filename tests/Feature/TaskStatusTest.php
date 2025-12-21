@@ -37,11 +37,11 @@ class TaskStatusTest extends TestCase
         $this->assertEquals($rowsCount + 1, TaskStatus::query()->count());
         
         $task_status = TaskStatus::first();
-        $expexted = $task_status->name . ' new name';
+        $expexted = "{$task_status->name} new name";
         
         $response2 = $this
             ->actingAs($user)
-            ->patch('/task_status/' . $task_status->id, [
+            ->patch("/task_status/{$task_status->id}", [
                 'name' => $expexted,
             ]);
         $response2
@@ -52,7 +52,7 @@ class TaskStatusTest extends TestCase
         
         $response3 = $this
             ->actingAs($user)
-            ->delete('/task_status/' . $task_status->id);
+            ->delete("/task_status/{$task_status->id}");
         $response3
             ->assertSessionHasNoErrors()
             ->assertRedirect('/task_status');
@@ -69,7 +69,7 @@ class TaskStatusTest extends TestCase
         
         $response = $this
             ->actingAs($user)
-            ->delete('/task_status/' . $task->status->id);
+            ->delete("/task_status/{$task->status->id}");
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect('/task_status');
@@ -91,8 +91,8 @@ class TaskStatusTest extends TestCase
         $task_status = TaskStatus::factory()->create();
         $expexted = $task_status->name;
         
-        $response2 = $this->patch('/task_status/' . $task_status->id, [
-                'name' => $expexted . ' new name',
+        $response2 = $this->patch("/task_status/{$task_status->id}", [
+                'name' => "$expexted new name",
             ]);
         $response2
             ->assertSessionHasNoErrors()
@@ -100,7 +100,7 @@ class TaskStatusTest extends TestCase
         $task_status->refresh();
         $this->assertSame($expexted, $task_status->name);
         
-        $response3 = $this->delete('/task_status/' . $task_status->id);
+        $response3 = $this->delete("/task_status/{$task_status->id}");
         $response3
             ->assertSessionHasNoErrors()
             ->assertRedirect('/login');

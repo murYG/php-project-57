@@ -26,6 +26,7 @@ console:
 	php artisan tinker
 	
 test:
+	cp -n .env.example .env.testing
 	php artisan key:gen --env=testing
 	php artisan test
 	

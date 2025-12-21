@@ -26,7 +26,7 @@ class TaskTest extends TestCase
         $response1 = $this->get('/tasks');
         $response1->assertOk();
         
-        $response2 = $this->get('/tasks/' . $task->id);
+        $response2 = $this->get("/tasks/{$task->id}");
         $response2->assertOk();
     }
     
@@ -49,11 +49,11 @@ class TaskTest extends TestCase
         $this->assertEquals($rowsCount + 1, Task::query()->count());
         
         $task = Task::first();
-        $expexted = $task->name . ' new name';
+        $expexted = "{$task->name} new name";
         
         $response2 = $this
             ->actingAs($user)
-            ->patch('/tasks/' . $task->id, [
+            ->patch("/tasks/{$task->id}", [
                 'name' => $expexted,
                 'status_id' => $task->status_id,
             ]);
@@ -75,7 +75,7 @@ class TaskTest extends TestCase
 
         $response1 = $this
             ->actingAs($user2)
-            ->delete('/tasks/' . $task->id);
+            ->delete("/tasks/{$task->id}");
         $response1
             ->assertSessionHasNoErrors()
             ->assertRedirect('/tasks');
@@ -83,7 +83,7 @@ class TaskTest extends TestCase
         
         $response2 = $this
             ->actingAs($user1)
-            ->delete('/tasks/' . $task->id);
+            ->delete("/tasks/{$task->id}");
         $response2
             ->assertSessionHasNoErrors()
             ->assertRedirect('/tasks');
@@ -109,9 +109,9 @@ class TaskTest extends TestCase
             ->assertRedirect('/login');
         $this->assertEquals($rowsCount, Task::query()->count());
         
-        $expexted = $task->name . ' new name';
+        $expexted = "{$task->name} new name";
 
-        $response2 = $this->patch('/tasks/' . $task->id, [
+        $response2 = $this->patch("/tasks/{$task->id}", [
                 'name' => $expexted,
                 'status_id' => $task->status_id,
                 'created_by_id' => $task->created_by_id
@@ -122,7 +122,7 @@ class TaskTest extends TestCase
         $task->refresh();
         $this->assertNotSame($expexted, $task->name);
         
-        $response3 = $this->delete('/tasks/' . $task->id);
+        $response3 = $this->delete("/tasks/{$task->id}");
         $response3
             ->assertSessionHasNoErrors()
             ->assertRedirect('/login');
