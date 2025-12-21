@@ -19,7 +19,7 @@ return [
             'title' => 'Statuses',            
             'confirm_deletion' => 'Are you sure?',
             'buttons' => [
-                'create' => 'Create status'
+                'create' => 'Add new status'
             ]
         ],
         'create' => [

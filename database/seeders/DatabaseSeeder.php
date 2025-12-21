@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(10)->create();
         
-        TaskStatus::updateOrCreate(['name' => 'new']);
+        TaskStatus::updateOrCreate(['name' => 'новый']);
         TaskStatus::updateOrCreate(['name' => 'в работе']);
         TaskStatus::updateOrCreate(['name' => 'на тестировании']);
         TaskStatus::updateOrCreate(['name' => 'завершен']);
