@@ -18,8 +18,16 @@ class TaskTest extends TestCase
      */
     public function test_tasks_page_is_displayed(): void
     {
-        $response = $this->get('/tasks');
-        $response->assertOk();
+        User::factory()->create();
+        TaskStatus::factory()->create();
+                
+        $task = Task::factory()->create();
+
+        $response1 = $this->get('/tasks');
+        $response1->assertOk();
+        
+        $response2 = $this->get('/tasks/' . $task->id);
+        $response2->assertOk();
     }
     
     public function test_user_can_add_update_tasks(): void
@@ -28,63 +36,58 @@ class TaskTest extends TestCase
         $task_status = TaskStatus::factory()->create();
         
         $rowsCount = Task::query()->count();
+        
         $response1 = $this
             ->actingAs($user)
             ->post('/tasks', [
-                'name' => 'Test',
+                'name' => 'Task name',
                 'status_id' => $task_status->id,
             ]);
-
-        $this->assertEquals($rowsCount + 1, Task::query()->count());
         $response1
             ->assertSessionHasNoErrors()
             ->assertRedirect('/tasks');
+        $this->assertEquals($rowsCount + 1, Task::query()->count());
         
-        $task = Task::factory()->create();
+        $task = Task::first();
+        $expexted = $task->name . ' new name';
         
-        $expexted = $task->name . ' ' . $task->status_id;
         $response2 = $this
             ->actingAs($user)
             ->patch('/tasks/' . $task->id, [
                 'name' => $expexted,
                 'status_id' => $task->status_id,
             ]);
-        
-        $task->refresh();
-        $this->assertSame($expexted, $task->name);
         $response2
             ->assertSessionHasNoErrors()
             ->assertRedirect('/tasks');
+        $task->refresh();
+        $this->assertSame($expexted, $task->name);
     }
     
     public function test_only_author_can_delete_task(): void
     {
-        User::factory(2)->create();
+        $user1 = User::factory()->create();
         TaskStatus::factory()->create();
-        
         $task = Task::factory()->create();
-        $user1 = User::find($task->created_by_id);
-        $user2 = User::firstWhere('id', "<>", $task->created_by_id);
-        
+        $user2 = User::factory()->create();
+
         $rowsCount = Task::query()->count();
-        
+
         $response1 = $this
             ->actingAs($user2)
             ->delete('/tasks/' . $task->id);
-        
-        $this->assertEquals($rowsCount, Task::query()->count());
         $response1
             ->assertSessionHasNoErrors()
             ->assertRedirect('/tasks');
+        $this->assertEquals($rowsCount, Task::query()->count());
         
         $response2 = $this
             ->actingAs($user1)
             ->delete('/tasks/' . $task->id);
-        
-        $this->assertEquals($rowsCount - 1, Task::query()->count());
         $response2
             ->assertSessionHasNoErrors()
             ->assertRedirect('/tasks');
+        $this->assertEquals($rowsCount - 1, Task::query()->count());
     }
     
     public function test_guest_can_not_add_update_delete_tasks(): void
@@ -94,6 +97,7 @@ class TaskTest extends TestCase
         $task = Task::factory()->create();
         
         $rowsCount = Task::query()->count();
+        
         $response1 = $this
             ->post('/tasks', [
                 'name' => 'Test',
@@ -105,7 +109,8 @@ class TaskTest extends TestCase
             ->assertRedirect('/login');
         $this->assertEquals($rowsCount, Task::query()->count());
         
-        $expexted = $task->name . ' 2';
+        $expexted = $task->name . ' new name';
+
         $response2 = $this->patch('/tasks/' . $task->id, [
                 'name' => $expexted,
                 'status_id' => $task->status_id,

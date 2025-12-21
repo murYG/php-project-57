@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
+use App\Models\Label;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -27,7 +28,8 @@ class TaskController extends Controller
         $task = new Task();
         $statuses = TaskStatus::all();
         $users = User::all();
-        return view('task.create', compact('task', 'statuses', 'users'));
+        $labels = Label::all();
+        return view('task.create', compact('task', 'statuses', 'users', 'labels'));
     }
 
     /**
@@ -46,6 +48,8 @@ class TaskController extends Controller
 
         $task = new Task($data);
         $task->save();
+        $task->labels()->sync($request->input('labels'));
+
         flash(__('flash.task.store_success'))->success();
 
         return redirect()->route('tasks.index');
@@ -66,7 +70,9 @@ class TaskController extends Controller
     {
         $statuses = TaskStatus::all();
         $users = User::all();
-        return view('task.edit', compact('task', 'statuses', 'users'));
+        $labels = Label::all();
+
+        return view('task.edit', compact('task', 'statuses', 'users', 'labels'));
     }
 
     /**
@@ -85,6 +91,8 @@ class TaskController extends Controller
 
         $task->fill($data);
         $task->save();
+        $task->labels()->sync($request->input('labels'));
+
         flash(__('flash.task.update_success'))->success();
 
         return redirect()->route('tasks.index');

@@ -58,5 +58,26 @@ return [
                 'edit' => 'Обновить'
             ]
         ]
-    ]
+    ],
+    'label' => [
+        'index' => [
+            'title' => 'Метки',            
+            'confirm_deletion' => 'Вы уверены?',
+            'buttons' => [
+                'create' => 'Создать метку'
+            ]
+        ],
+        'create' => [
+            'title' => 'Создать метку',
+            'buttons' => [
+                'create' => 'Создать'
+            ]
+        ],
+        'edit' => [
+            'title' => 'Изменение метки',
+            'buttons' => [
+                'edit' => 'Обновить'
+            ]
+        ]
+    ],
 ];

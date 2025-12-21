@@ -35,3 +35,15 @@
     </x-select>
     <x-input-error :messages="$errors->get('assigned_to_id')" class="mt-2" />
 </div>
+
+<div class="mb-3">
+    <x-input-label for="labels" :value="__('models.task.labels')" />
+    <x-select multiple id="labels" class="block mt-1 w-3/4" name="labels[]">
+    @foreach ($labels as $label)
+        <option value="{{ $label->id }}" @selected(old('labels', $task->labels->contains($label->id)))>
+            {{ $label->name }}
+        </option>
+    @endforeach
+    </x-select>
+    <x-input-error :messages="$errors->get('labels')" class="mt-2" />
+</div>

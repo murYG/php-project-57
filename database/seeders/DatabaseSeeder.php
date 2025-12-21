@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\TaskStatus;
 use App\Models\Task;
+use App\Models\Label;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -23,6 +24,8 @@ class DatabaseSeeder extends Seeder
         TaskStatus::updateOrCreate(['name' => 'в работе']);
         TaskStatus::updateOrCreate(['name' => 'на тестировании']);
         TaskStatus::updateOrCreate(['name' => 'завершен']);
+        
+        Label::factory(50)->create();
         
         Task::factory(25)->create();
     }

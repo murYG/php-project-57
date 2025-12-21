@@ -12,7 +12,13 @@ return [
         'description' => 'Описание',
         'author' => 'Автор',
         'responsible' => 'Исполнитель',
-        'status' => 'Статус',
-        'created_at' => 'Дата создания',        
+        'status' => 'Статус', 
+        'labels' => 'Метки',
+        'created_at' => 'Дата создания'
+    ],
+    'label' => [
+        'id' => 'ID',
+        'name' => 'Имя',
+        'description' => 'Описание'
     ]
 ];

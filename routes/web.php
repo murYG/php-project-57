@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskStatusController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\LabelController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,5 +29,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ]);
 });
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
+Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resources([
+        'labels' => LabelController::class,
+    ]);
+});
+Route::get('/labels', [LabelController::class, 'index'])->name('labels.index');
 
 require __DIR__ . '/auth.php';

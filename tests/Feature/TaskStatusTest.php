@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Models\TaskStatus;
+use App\Models\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,74 +12,98 @@ use Tests\TestCase;
 class TaskStatusTest extends TestCase
 {
     use RefreshDatabase;
-    
-    /**
-     * A basic feature test example.
-     */
+
     public function test_task_status_page_is_displayed(): void
     {
-        $response = $this->get('/task_status');
+        TaskStatus::factory()->create();
 
+        $response = $this->get('/task_status');
         $response->assertOk();
     }
     
     public function test_user_can_add_update_delete_task_status(): void
     {
         $user = User::factory()->create();
-
         $rowsCount = TaskStatus::query()->count();
-        $response = $this
+        
+        $response1 = $this
             ->actingAs($user)
             ->post('/task_status', [
-                'name' => 'Test',
+                'name' => 'Task status name',
             ]);
-
-        $this->assertEquals($rowsCount + 1, TaskStatus::query()->count());
-        $response
+        $response1
             ->assertSessionHasNoErrors()
             ->assertRedirect('/task_status');
+        $this->assertEquals($rowsCount + 1, TaskStatus::query()->count());
         
-        $task_status = TaskStatus::findOrFail(1);
-        $expexted = $task_status->name . ' 2';
-        $response = $this
+        $task_status = TaskStatus::first();
+        $expexted = $task_status->name . ' new name';
+        
+        $response2 = $this
             ->actingAs($user)
-            ->patch('/task_status/1', [
+            ->patch('/task_status/' . $task_status->id, [
                 'name' => $expexted,
             ]);
-        
-        $task_status->refresh();
-        $this->assertSame($expexted, $task_status->name);
-        $response
+        $response2
             ->assertSessionHasNoErrors()
             ->assertRedirect('/task_status');
+        $task_status->refresh();
+        $this->assertSame($expexted, $task_status->name);
+        
+        $response3 = $this
+            ->actingAs($user)
+            ->delete('/task_status/' . $task_status->id);
+        $response3
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/task_status');
+        $this->assertEquals($rowsCount, TaskStatus::query()->count());
+    }
+    
+    public function test_user_can_not_delete_used_task_status(): void
+    {
+        $user = User::factory()->create();
+        TaskStatus::factory()->create();
+        $task = Task::factory()->create();
+        
+        $rowsCount = TaskStatus::query()->count();
         
         $response = $this
             ->actingAs($user)
-            ->delete('/task_status/1');
-        
-        $this->assertEquals($rowsCount, TaskStatus::query()->count());
+            ->delete('/task_status/' . $task->status->id);
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect('/task_status');
+        $this->assertEquals($rowsCount, TaskStatus::query()->count());
     }
     
     public function test_guest_can_not_add_update_delete_task_status(): void
     {
         $rowsCount = TaskStatus::query()->count();
-        $response = $this->post('/task_status', [
-                'name' => 'Test',
-            ]);
-
-        $this->assertEquals($rowsCount, TaskStatus::query()->count());
-        $response->assertRedirect('/login');
         
-        $response = $this->patch('/task_status/1', [
-                'name' => 'Test',
+        $response1 = $this->post('/task_status', [
+                'name' => 'Task status name',
             ]);
-        $response->assertRedirect('/login');
-        
-        $response = $this->delete('/task_status/1');
-        $response->assertRedirect('/login');
+        $response1
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/login');
         $this->assertEquals($rowsCount, TaskStatus::query()->count());
+        
+        $task_status = TaskStatus::factory()->create();
+        $expexted = $task_status->name;
+        
+        $response2 = $this->patch('/task_status/' . $task_status->id, [
+                'name' => $expexted . ' new name',
+            ]);
+        $response2
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/login');
+        $task_status->refresh();
+        $this->assertSame($expexted, $task_status->name);
+        
+        $response3 = $this->delete('/task_status/' . $task_status->id);
+        $response3
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/login');
+        $this->assertEquals($rowsCount + 1, TaskStatus::query()->count());
     }
 }

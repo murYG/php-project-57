@@ -13,5 +13,11 @@ return [
         'destroy_auth_error' => 'Нельзя удалить чужую задачу',
         'store_success' => 'Задача успешно добавлена',
         'update_success' => 'Задача успешно изменена',
+    ],
+    'label' => [
+        'destroy_success' => 'Метка удалена',
+        'destroy_error' => 'Не удалось удалить метку',
+        'store_success' => 'Метка успешно добавлена',
+        'update_success' => 'Метка успешно изменена',
     ]
 ];
