@@ -1,40 +1,49 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <a href="{{ route('welcome') }}" class="flex items-center">
-                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">{{ __('layouts.navigation.home') }}</span>
-            </a>
-            <div class="flex">
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('task_status.index')" :active="request()->routeIs('task_status.index')">
-                        {{ __('layouts.navigation.task_status') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
-                        {{ __('layouts.navigation.task') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('labels.index')" :active="request()->routeIs('labels.index')">
-                        {{ __('layouts.navigation.label') }}
-                    </x-nav-link>
-                </div>
-            </div>
+<nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900 shadow-md">
+    <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
+        <a href="{{ route('welcome') }}" class="flex items-center">
+            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">{{ __('layouts.navigation.home') }}</span>
+        </a>
 
-            <div class="sm:flex sm:items-center sm:ms-6">
-                
-                @auth
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('layouts.navigation.buttons.logout') }}
-                    </a>
-                </form>
-                @endauth
-                @guest
-                    <a href="{{ route('login') }}">{{ __('layouts.navigation.buttons.login') }}</a>
-                    <a href="{{ route('register') }}">{{ __('layouts.navigation.buttons.register') }}</a>
-                @endguest
+        <div class="flex items-center lg:order-2">
+            @auth
+            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
+                {{ __('layouts.navigation.buttons.logout') }}
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            @endauth
+            @guest
+            <div class="flex items-center lg:order-2">
+                <a href="{{ route('login') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    {{ __('layouts.navigation.buttons.login') }}
+                </a>
+                <a href="{{ route('register') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
+                    {{ __('layouts.navigation.buttons.register') }}
+                </a>
             </div>
+            @endguest
+        </div>
+
+        <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1">
+            <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                <li>
+                    <a href="{{ route('tasks.index') }}" class="block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0">
+                        {{ __('layouts.navigation.task') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('task_status.index') }}" class="block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0">
+                        {{ __('layouts.navigation.task_status') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('labels.index') }}" class="block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0">
+                        {{ __('layouts.navigation.label') }}
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

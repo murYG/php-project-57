@@ -1,49 +1,65 @@
-<div class="mb-3">
-    <x-input-label for="name" :value="__('models.task.name')" />
-    <x-text-input id="name" class="block mt-1 w-3/4" type="text" name="name" :value="old('name', $task->name)" autofocus />
+<div>
+    <label for="name">{{ __('models.task.name') }}</label>
+</div>
+<div class="mt-2">
+    <input class="rounded border-gray-300 w-1/3" type="text" name="name" id="name" value="{{ old('name', $task->name) }}">
     <x-input-error :messages="$errors->get('name')" class="mt-2" />
 </div>
 
-<div class="mb-3">
-    <x-input-label for="description" :value="__('models.task.description')" />
-    <x-textarea id="description" class="block mt-1 w-3/4" name="description">{{ old('description', $task->description) }}</x-textarea>
+
+
+<div>
+    <label for="description">{{ __('models.task.description') }}</label>
+</div>
+<div>
+    <textarea class="rounded border-gray-300 w-1/3 h-32" name="description" id="description">
+        {{ old('description', $task->description) }}
+    </textarea>
     <x-input-error :messages="$errors->get('description')" class="mt-2" />
 </div>
 
-<div class="mb-3">
-    <x-input-label for="status_id" :value="__('models.task.status')" />
-    <x-select id="status_id" class="block mt-1 w-3/4" name="status_id">
+
+
+<div>
+    <label for="status_id">{{ __('models.task.status') }}</label>
+</div>
+<div>
+    <select class="rounded border-gray-300 w-1/3" name="status_id" id="status_id">
         <option value="" @selected(old('status_id', $task->status_id) == null)></option>
-    @foreach ($statuses as $status)
-        <option value="{{ $status->id }}" @selected(old('status_id', $task->status_id) == $status->id)>
-            {{ $status->name }}
-        </option>
-    @endforeach
-    </x-select>
+        @foreach ($statuses as $status)
+            <option value="{{ $status->id }}" @selected(old('status_id', $task->status_id) == $status->id)>
+                {{ $status->name }}
+            </option>
+        @endforeach
+    </select>
     <x-input-error :messages="$errors->get('status_id')" class="mt-2" />
 </div>
 
-<div class="mb-3">
-    <x-input-label for="assigned_to_id" :value="__('models.task.responsible')" />
-    <x-select id="assigned_to_id" class="block mt-1 w-3/4" name="assigned_to_id">
+<div>
+    <label for="assigned_to_id">{{ __('models.task.status') }}</label>
+</div>
+<div>
+    <select class="rounded border-gray-300 w-1/3" name="assigned_to_id" id="assigned_to_id">
         <option value="" @selected(old('assigned_to_id', $task->assigned_to_id) == null)></option>
-    @foreach ($users as $responsible)
-        <option value="{{ $responsible->id }}" @selected(old('assigned_to_id', $task->assigned_to_id) == $responsible->id)>
-            {{ $responsible->name }}
-        </option>
-    @endforeach
-    </x-select>
+        @foreach ($users as $responsible)
+            <option value="{{ $responsible->id }}" @selected(old('assigned_to_id', $task->assigned_to_id) == $responsible->id)>
+                {{ $responsible->name }}
+            </option>
+        @endforeach
+    </select>
     <x-input-error :messages="$errors->get('assigned_to_id')" class="mt-2" />
 </div>
 
-<div class="mb-3">
-    <x-input-label for="labels" :value="__('models.task.labels')" />
-    <x-select multiple id="labels" class="block mt-1 w-3/4" name="labels[]">
-    @foreach ($labels as $label)
-        <option value="{{ $label->id }}" @selected($task->labels->contains(old('labels', $label->id)))>
-            {{ $label->name }}
-        </option>
-    @endforeach
-    </x-select>
+<div>
+    <label for="labels">{{ __('models.task.labels') }}</label>
+</div>
+<div>
+    <select class="rounded border-gray-300 w-1/3 h-32" name="labels[]" id="labels[]" multiple="">
+        @foreach ($labels as $label)
+            <option value="{{ $label->id }}" @selected($task->labels->contains(old('labels', $label->id)))>
+                {{ $label->name }}
+            </option>
+        @endforeach
+    </select>
     <x-input-error :messages="$errors->get('labels')" class="mt-2" />
 </div>

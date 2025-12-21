@@ -1,20 +1,24 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    <div class="grid col-span-full">
+        <h1 class="mb-5">
             {{ __("views.task.edit.title") }}
-        </h2>
-    </x-slot>
-    
-    <form method="POST" action="{{ route('tasks.update', $task) }}">
-        @csrf
-        @method('PATCH')
+        </h1>
 
-        @include('task.form')
+        <form class="w-50"  method="POST" action="{{ route('tasks.update', $task) }}">
+            @csrf
+            @method('PATCH')
 
-        <div class="flex items-center mt-4">
-            <x-primary-button class="ms-3">
-                {{ __('views.task.edit.buttons.edit') }}
-            </x-primary-button>
-        </div>
-    </form>
+            <div class="flex flex-col">
+                @include('task.form')
+                
+                <div class="mt-2">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
+                        {{ __('views.task.edit.buttons.edit') }}
+                    </button>
+                </div>                
+            </div>
+        </form>
+    </div>
 </x-app-layout>
+
+

@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
         TaskStatus::updateOrCreate(['name' => 'на тестировании']);
         TaskStatus::updateOrCreate(['name' => 'завершен']);
         
-        Label::factory(50)->create();
+        Label::factory(20)->create();
         
-        Task::factory(25)->create();
+        Task::factory(15)->create();
     }
 }

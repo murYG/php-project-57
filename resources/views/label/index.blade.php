@@ -1,26 +1,24 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    <div class="grid col-span-full">
+        <h1 class="mb-5">
             {{ __("views.label.index.title") }}
-        </h2>
-    </x-slot>
+        </h1>
 
-    @auth
-    <div>
-        <x-a-btn-primary href="{{ route('labels.create') }}">
-            {{ __("views.label.index.buttons.create") }}
-        </x-a-btn-primary>
-    </div>
-    @endauth
+        <div>
+            @auth
+            <a href="{{ route('labels.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                {{ __("views.label.index.buttons.create") }}
+            </a>
+            @endauth
+        </div>
 
-    <div>
         <table class="mt-4">
             <thead class="border-b-2 border-solid border-black text-left">
                 <tr>
                     <td>{{ __('models.label.id') }}</td>
                     <td>{{ __('models.label.name') }}</td>
                     <td>{{ __('models.label.description') }}</td>
-                    <td>{{ __('models.task.created_at') }}</td>
+                    <td>{{ __('models.label.created_at') }}</td>
                     @auth
                     <td>{{ __("views.common.actions.title") }}</td>
                     @endauth
@@ -28,30 +26,34 @@
             </thead>
             <tbody>
                 @foreach($labels as $label)
-                    <tr>
+                    <tr class="border-b border-dashed text-left">
                         <td>{{ $label->id }}</td>
                         <td>{{ $label->name }}</td>
                         <td>{{ $label->description }}</td>
                         <td>{{ $label->created_at->format('d.m.Y') }}</td>
                         @auth
                         <td>
-                            <a class="text-decoration-none" href="{{ route('labels.edit', $label->id)}}">{{ __('views.common.actions.actions.edit') }}</a>
-                            <form method="POST" action="{{ route('labels.destroy', ['label' => $label]) }}">
+                            <a class="text-red-600 hover:text-red-900" 
+                                href="{{ route('labels.destroy', ['label' => $label]) }}" 
+                                onclick="event.preventDefault(); 
+                                    if (confirm('{{ __('views.label.index.confirm_deletion') }}')) 
+                                        document.getElementById('delete-form[{{ $label->id }}]').submit();">
+                                 {{ __('views.common.actions.actions.delete') }}
+                            </a>
+                            <form id="delete-form[{{ $label->id }}]" method="POST" action="{{ route('labels.destroy', ['label' => $label]) }}" style="display: none;">
                                 @csrf
                                 @method('DELETE')
-                                <a class="text-decoration-none link-danger" 
-                                    href="{{ route('labels.destroy', ['label' => $label]) }}" 
-                                    onclick="event.preventDefault(); if (confirm('{{ __('views.label.index.confirm_deletion') }}')) this.closest('form').submit();">
-                                     {{ __('views.common.actions.actions.delete') }}
-                                </a>
-                            </form>
+                            </form>                            
+                            <a class="text-blue-600 hover:text-blue-900" href="{{ route('labels.edit', $label->id)}}">
+                                {{ __('views.common.actions.actions.edit') }}
+                            </a>
                         </td>
                         @endauth
                     </tr>
                 @endforeach
             </tbody>
         </table>
-
+        
         {{ $labels->links() }}
     </div>
 </x-app-layout>

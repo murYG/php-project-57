@@ -1,5 +1,7 @@
-<div class="mb-3">
-    <x-input-label for="name" :value="__('models.task_status.name')" />
-    <x-text-input id="name" class="block mt-1 w-3/4" type="text" name="name" :value="old('name', $task_status->name)" autofocus />
+<div>
+    <label for="name">{{ __('models.task_status.name') }}</label>
+</div>
+<div class="mt-2">
+    <input class="rounded border-gray-300 w-1/3" type="text" name="name" id="name" value="{{ old('name', $task_status->name) }}">
     <x-input-error :messages="$errors->get('name')" class="mt-2" />
 </div>

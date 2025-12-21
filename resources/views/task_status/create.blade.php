@@ -1,19 +1,20 @@
-<x-app-layout> 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+<x-app-layout>
+    <div class="grid col-span-full">
+        <h1 class="mb-5">
             {{ __("views.task_status.create.title") }}
-        </h2>
-    </x-slot>
-    
-    <form method="POST" action="{{ route('task_status.store') }}">
-        @csrf
+        </h1>
 
-        @include('task_status.form')
-
-        <div class="flex items-center mt-4">
-            <x-primary-button class="ms-3">
-                {{ __('views.task_status.create.buttons.create') }}
-            </x-primary-button>
-        </div>
-    </form>
+        <form class="w-50"  method="POST" action="{{ route('task_status.store') }}">
+            @csrf
+            <div class="flex flex-col">
+                @include('task_status.form')
+                
+                <div class="mt-2">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
+                        {{ __('views.task_status.create.buttons.create') }}
+                    </button>
+                </div>                
+            </div>
+        </form>
+    </div>
 </x-app-layout>
