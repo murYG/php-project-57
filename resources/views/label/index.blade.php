@@ -7,9 +7,9 @@
 
     @auth
     <div>
-        <a href="{{ route('labels.create') }}">
+        <x-a-btn-primary href="{{ route('labels.create') }}">
             {{ __("views.label.index.buttons.create") }}
-        </a>
+        </x-a-btn-primary>
     </div>
     @endauth
 

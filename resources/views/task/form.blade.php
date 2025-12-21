@@ -40,7 +40,7 @@
     <x-input-label for="labels" :value="__('models.task.labels')" />
     <x-select multiple id="labels" class="block mt-1 w-3/4" name="labels[]">
     @foreach ($labels as $label)
-        <option value="{{ $label->id }}" @selected(old('labels', $task->labels->contains($label->id)))>
+        <option value="{{ $label->id }}" @selected($task->labels->contains(old('labels', $label->id)))>
             {{ $label->name }}
         </option>
     @endforeach

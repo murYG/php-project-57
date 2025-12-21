@@ -5,13 +5,18 @@
         </h2>
     </x-slot>
 
-    @auth
-    <div>
-        <a href="{{ route('tasks.create') }}">
-            {{ __("views.task.index.buttons.create") }}
-        </a>
+    <div class="w-full flex items-center">
+        <div>
+            @include('task.filter')
+        </div>
+        @auth
+        <div class="w-full flex justify-end">
+            <x-a-btn-primary href="{{ route('tasks.create') }}">
+                {{ __("views.task.index.buttons.create") }}
+            </x-a-btn-primary>
+        </div>
+        @endauth
     </div>
-    @endauth
 
     <div>
         <table class="mt-4">

@@ -40,7 +40,8 @@ return [
             'title' => 'Задачи',            
             'confirm_deletion' => 'Вы уверены?',
             'buttons' => [
-                'create' => 'Создать задачу'
+                'create' => 'Создать задачу',
+                'filter' => 'Применить'
             ]
         ],
         'show' => [

@@ -15,15 +15,39 @@ namespace App\Models{
 /**
  * @property int $id
  * @property string $name
- * @property string $description
- * @property int $status_id
- * @property int $created_by_id
- * @property int $assigned_to_id
+ * @property string|null $description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\User|null $author
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Task> $tasks
+ * @property-read int|null $tasks_count
+ * @method static \Database\Factories\LabelFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereUpdatedAt($value)
+ */
+	class Label extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property int $status_id
+ * @property int $created_by_id
+ * @property int|null $assigned_to_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $author
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Label> $labels
+ * @property-read int|null $labels_count
  * @property-read \App\Models\User|null $responsible
- * @property-read \App\Models\TaskStatus|null $status
+ * @property-read \App\Models\TaskStatus $status
  * @method static \Database\Factories\TaskFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Task newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Task newQuery()
