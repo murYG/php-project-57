@@ -2366,7 +2366,8 @@ namespace PHPSTORM_META {
 'views.task_status.create.title','views.task_status.create.buttons.create','views.task_status.edit.title','views.task_status.edit.buttons.edit','views.task.index.title',
 'views.task.index.confirm_deletion','views.task.index.buttons.create','views.task.index.buttons.filter','views.task.show.title','views.task.create.title',
 'views.task.create.buttons.create','views.task.edit.title','views.task.edit.buttons.edit','views.label.index.title','views.label.index.confirm_deletion',
-'views.label.index.buttons.create','views.label.create.title','views.label.create.buttons.create','views.label.edit.title','views.label.edit.buttons.edit',);
+'views.label.index.buttons.create','views.label.create.title','views.label.create.buttons.create','views.label.edit.title','views.label.edit.buttons.edit',
+'validation.attributes.password',);
         registerArgumentsSet('env', 
 'APP_NAME','APP_ENV','APP_KEY','APP_DEBUG','APP_URL',
 'FRONTEND_URL','APP_LOCALE','APP_FALLBACK_LOCALE','APP_FAKER_LOCALE','APP_MAINTENANCE_DRIVER',
