@@ -196,11 +196,22 @@ return [
     */
 
     'attributes' => [],
-
+    
     /*
     |--------------------------------------------------------------------------
     | Custom Model Validation Language Lines
     |--------------------------------------------------------------------------
     |
     */
+    
+    'task_status' => [
+        'name' => [
+            'unique' => 'A status with this name already exists'
+        ]
+    ],
+    'label' => [
+        'name' => [
+            'unique' => 'A label with this name already exists'
+        ]
+    ],
 ];
