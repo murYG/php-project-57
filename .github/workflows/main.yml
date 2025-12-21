@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies with composer
         run: composer update --no-ansi --no-interaction --no-progress
       - name: gen key
-        run: npm ci && npm run build && php artisan key:gen --env=testing
+        run: cp -n .env.example .env.testing && npm ci && npm run build && php artisan key:gen --env=testing
       - name: Run tests with phpunit/phpunit
         run: vendor/bin/phpunit tests --coverage-clover=coverage.xml
       - name: SonarQube Scan
