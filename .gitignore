@@ -24,3 +24,5 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 /nbproject
+tests/Browser
+tests/DuskTestCase.php
