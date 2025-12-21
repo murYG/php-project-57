@@ -2,7 +2,7 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <a href="{{ route('main') }}" class="flex items-center">
+            <a href="{{ route('welcome') }}" class="flex items-center">
                 <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">{{ __('layouts.navigation.home') }}</span>
             </a>
             <div class="flex">
