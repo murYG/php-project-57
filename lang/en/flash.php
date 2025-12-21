@@ -4,7 +4,7 @@ return [
     'task_status' => [
         'destroy_success' => 'Status not found',
         'destroy_error' => 'Failed to delete status',
-        'store_success' => 'Status added successfully',
+        'store_success' => 'new status added',
         'update_success' => 'Status successfully changed',
     ],    
     'task' => [

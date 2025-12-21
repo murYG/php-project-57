@@ -19,6 +19,7 @@ return [
     'label' => [
         'id' => 'ID',
         'name' => 'Name',
-        'description' => 'Description'
+        'description' => 'Description',
+        'created_at' => 'Дата создания'
     ]
 ];
