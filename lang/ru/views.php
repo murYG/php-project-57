@@ -16,7 +16,7 @@ return [
     ],
     'task_status' => [
         'index' => [
-            'title' => 'Статусы',            
+            'title' => 'Статусы',
             'confirm_deletion' => 'Вы уверены?',
             'buttons' => [
                 'create' => 'Создать статус'
@@ -37,7 +37,7 @@ return [
     ],
     'task' => [
         'index' => [
-            'title' => 'Задачи',            
+            'title' => 'Задачи',
             'confirm_deletion' => 'Вы уверены?',
             'buttons' => [
                 'create' => 'Создать задачу',
@@ -46,7 +46,7 @@ return [
         ],
         'show' => [
             'title' => 'Просмотр задачи'
-        ],        
+        ],
         'create' => [
             'title' => 'Создать задачу',
             'buttons' => [
@@ -62,7 +62,7 @@ return [
     ],
     'label' => [
         'index' => [
-            'title' => 'Метки',            
+            'title' => 'Метки',
             'confirm_deletion' => 'Вы уверены?',
             'buttons' => [
                 'create' => 'Создать метку'

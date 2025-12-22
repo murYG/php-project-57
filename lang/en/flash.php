@@ -6,7 +6,7 @@ return [
         'destroy_error' => 'Не удалось удалить статус',
         'store_success' => 'Статус успешно создан',
         'update_success' => 'Статус успешно изменён',
-    ],    
+    ],
     'task' => [
         'destroy_success' => 'Задача успешно удалена',
         'destroy_error' => 'Задача не удалена',

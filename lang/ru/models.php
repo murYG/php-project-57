@@ -12,7 +12,7 @@ return [
         'description' => 'Описание',
         'author' => 'Автор',
         'responsible' => 'Исполнитель',
-        'status' => 'Статус', 
+        'status' => 'Статус',
         'labels' => 'Метки',
         'created_at' => 'Дата создания'
     ],
