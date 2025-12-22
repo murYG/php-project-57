@@ -12,7 +12,7 @@ class TaskStatusController extends Controller
      */
     public function index()
     {
-        $task_statuses = TaskStatus::orderBy('id')->get();
+        $task_statuses = TaskStatus::orderBy('id')->paginate();
         return view('task_status.index', compact('task_statuses'));
     }
 
@@ -43,7 +43,7 @@ class TaskStatusController extends Controller
         $task_status->save();
         flash(__('flash.task_status.store_success'))->success();
 
-        return redirect()->route('task_status.index');
+        return redirect()->route('task_statuses.index');
     }
 
     /**
@@ -80,7 +80,7 @@ class TaskStatusController extends Controller
         $task_status->save();
         flash(__('flash.task_status.update_success'))->success();
 
-        return redirect()->route('task_status.index');
+        return redirect()->route('task_statuses.index');
     }
 
     /**
@@ -95,6 +95,6 @@ class TaskStatusController extends Controller
             flash(__('flash.task_status.destroy_error'))->error();
         }
 
-        return redirect()->route('task_status.index');
+        return redirect()->route('task_statuses.index');
     }
 }

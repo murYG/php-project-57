@@ -2292,9 +2292,9 @@ namespace PHPSTORM_META {
 'signed','throttle','verified',);
         registerArgumentsSet('routes', 
 'dusk.login','dusk.logout','dusk.user','sanctum.csrf-cookie',
-'welcome','profile.edit','profile.update','profile.destroy','task_status.index',
-'task_status.create','task_status.store','task_status.show','task_status.edit','task_status.update',
-'task_status.destroy','tasks.index','tasks.create','tasks.store','tasks.show',
+'welcome','profile.edit','profile.update','profile.destroy','task_statuses.index',
+'task_statuses.create','task_statuses.store','task_statuses.show','task_statuses.edit','task_statuses.update',
+'task_statuses.destroy','tasks.index','tasks.create','tasks.store','tasks.show',
 'tasks.edit','tasks.update','tasks.destroy','labels.index','labels.create',
 'labels.store','labels.show','labels.edit','labels.update','labels.destroy',
 'register','login','password.request',

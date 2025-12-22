@@ -4,7 +4,7 @@
             {{ __("views.task_status.create.title") }}
         </h1>
 
-        <form class="w-50"  method="POST" action="{{ route('task_status.store') }}">
+        <form class="w-50"  method="POST" action="{{ route('task_statuses.store') }}">
             @csrf
             <div class="flex flex-col">
                 @include('task_status.form')

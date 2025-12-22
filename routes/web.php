@@ -18,10 +18,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resources([
-        'task_status' => TaskStatusController::class,
+        'task_statuses' => TaskStatusController::class,
     ]);
 });
-Route::get('/task_status', [TaskStatusController::class, 'index'])->name('task_status.index');
+Route::get('/task_statuses', [TaskStatusController::class, 'index'])->name('task_statuses.index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resources([

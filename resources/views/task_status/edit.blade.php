@@ -4,7 +4,7 @@
             {{ __("views.task_status.edit.title") }}
         </h1>
 
-        <form class="w-50"  method="POST" action="{{ route('task_status.update', $task_status) }}">
+        <form class="w-50"  method="POST" action="{{ route('task_statuses.update', $task_status) }}">
             @csrf
             @method('PATCH')
 

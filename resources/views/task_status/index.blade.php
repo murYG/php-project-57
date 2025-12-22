@@ -6,7 +6,7 @@
 
         <div>
             @auth
-            <a href="{{ route('task_status.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <a href="{{ route('task_statuses.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 {{ __("views.task_status.index.buttons.create") }}
             </a>
             @endauth
@@ -32,17 +32,17 @@
                         @auth
                         <td>
                             <a class="text-red-600 hover:text-red-900" 
-                                href="{{ route('task_status.destroy', ['task_status' => $task_status]) }}" 
+                                href="{{ route('task_statuses.destroy', ['task_status' => $task_status]) }}" 
                                 onclick="event.preventDefault(); 
                                     if (confirm('{{ __('views.task_status.index.confirm_deletion') }}')) 
                                         document.getElementById('delete-form[{{ $task_status->id }}]').submit();">
                                  {{ __('views.common.actions.actions.delete') }}
                             </a>
-                            <form id="delete-form[{{ $task_status->id }}]" method="POST" action="{{ route('task_status.destroy', ['task_status' => $task_status]) }}" style="display: none;">
+                            <form id="delete-form[{{ $task_status->id }}]" method="POST" action="{{ route('task_statuses.destroy', ['task_status' => $task_status]) }}" style="display: none;">
                                 @csrf
                                 @method('DELETE')
                             </form>                            
-                            <a class="text-blue-600 hover:text-blue-900" href="{{ route('task_status.edit', $task_status->id)}}">
+                            <a class="text-blue-600 hover:text-blue-900" href="{{ route('task_statuses.edit', $task_status->id)}}">
                                 {{ __('views.common.actions.actions.edit') }}
                             </a>
                         </td>
@@ -51,5 +51,7 @@
                 @endforeach
             </tbody>
         </table>
+        
+        {{ $task_statuses->links() }}
     </div>
 </x-app-layout>
