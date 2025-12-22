@@ -9,7 +9,7 @@
 <div>
     <label for="description">{{ __('models.label.description') }}</label>
 </div>
-<div class="mt-2">
-    <input class="rounded border-gray-300 w-1/3" type="text" name="description" id="description" value="{{ old('description', $label->description) }}">
+<div>
+    <textarea class="rounded border-gray-300 w-1/3 h-32" name="description" id="description">{{ old('description', $label->description) }}</textarea>
     <x-input-error :messages="$errors->get('description')" class="mt-2" />
 </div>
