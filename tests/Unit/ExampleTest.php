@@ -3,10 +3,13 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use App\Models\Task;
 
 class ExampleTest extends TestCase
 {
-    public function testThatTrueIsTrue(): void
+    public function testTaskStatusFillableCheck(): void
     {
+        $task = new Task(['name' => 'Test', 'id' => 1]);
+        $this->assertNull($task->id);
     }
 }
