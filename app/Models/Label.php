@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\belongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Label extends Model
 {
@@ -15,7 +15,7 @@ class Label extends Model
         'description'
     ];
 
-    public function tasks(): belongsToMany
+    public function tasks(): BelongsToMany
     {
         return $this->belongsToMany(Task::class, 'task_label');
     }

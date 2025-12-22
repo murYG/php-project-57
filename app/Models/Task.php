@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\belongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Task extends Model
 {
@@ -22,7 +22,7 @@ class Task extends Model
     public static function booted()
     {
         static::creating(function ($model) {
-            if (empty($model->created_by_id)) {
+            if (is_null($model->created_by_id)) {
                 $model->created_by_id = auth()->id();
             }
         });
@@ -43,7 +43,7 @@ class Task extends Model
         return $this->belongsTo(TaskStatus::class, 'status_id', 'id');
     }
 
-    public function labels(): belongsToMany
+    public function labels(): BelongsToMany
     {
         return $this->belongsToMany(Label::class, 'task_label');
     }

@@ -62,14 +62,14 @@ class TaskStatusTest extends TestCase
     public function testUserCanNotDeleteUsedTaskStatuses(): void
     {
         $user = User::factory()->create();
-        TaskStatus::factory()->create();
+        $task_status = TaskStatus::factory()->create();
         $task = Task::factory()->create();
 
         $rowsCount = TaskStatus::query()->count();
 
         $response = $this
             ->actingAs($user)
-            ->delete("/task_statuses/{$task->status->id}");
+            ->delete("/task_statuses/{$task_status->id}");
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect('/task_statuses');
