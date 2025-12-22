@@ -2,22 +2,22 @@
 
 return [
     'task_status' => [
-        'destroy_success' => 'Статус удален',
+        'destroy_success' => 'Статус успешно удалён',
         'destroy_error' => 'Не удалось удалить статус',
-        'store_success' => 'Статус успешно добавлен',
+        'store_success' => 'Статус успешно создан',
         'update_success' => 'Статус успешно изменён',
     ],    
     'task' => [
-        'destroy_success' => 'Задача удалена',
+        'destroy_success' => 'Задача успешно удалена',
         'destroy_error' => 'Задача не удалена',
         'destroy_auth_error' => 'Нельзя удалить чужую задачу',
-        'store_success' => 'Задача успешно добавлена',
+        'store_success' => 'Задача успешно создана',
         'update_success' => 'Задача успешно изменена',
     ],
     'label' => [
-        'destroy_success' => 'Метка удалена',
+        'destroy_success' => 'Метка успешно удалена',
         'destroy_error' => 'Не удалось удалить метку',
-        'store_success' => 'Метка успешно добавлена',
+        'store_success' => 'Метка успешно создана',
         'update_success' => 'Метка успешно изменена',
     ]
 ];
