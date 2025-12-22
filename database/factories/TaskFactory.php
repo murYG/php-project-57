@@ -25,7 +25,7 @@ class TaskFactory extends Factory
             'assigned_to_id' => fake()->numberBetween(1, $userCount)
         ];
     }
-    
+
     public function configure(): static
     {
         return $this->afterCreating(function (\App\Models\Task $task) {

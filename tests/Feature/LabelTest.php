@@ -14,19 +14,19 @@ class LabelTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_labels_page_is_displayed(): void
+    public function testLabelsPageIsDisplayed(): void
     {
         Label::factory()->create();
 
         $response = $this->get('/labels');
         $response->assertOk();
     }
-    
-    public function test_user_can_add_update_delete_labels(): void
+
+    public function testUserCanAddUpdateDeleteLabels(): void
     {
         $user = User::factory()->create();
         $rowsCount = Label::query()->count();
-        
+
         $response1 = $this
             ->actingAs($user)
             ->post('/labels', [
@@ -36,10 +36,10 @@ class LabelTest extends TestCase
             ->assertSessionHasNoErrors()
             ->assertRedirect('/labels');
         $this->assertEquals($rowsCount + 1, Label::query()->count());
-        
+
         $label = Label::first();
         $expexted = "{$label->name} new name";
-        
+
         $response2 = $this
             ->actingAs($user)
             ->patch("/labels/{$label->id}", [
@@ -50,7 +50,7 @@ class LabelTest extends TestCase
             ->assertRedirect('/labels');
         $label->refresh();
         $this->assertSame($expexted, $label->name);
-        
+
         $response3 = $this
             ->actingAs($user)
             ->delete("/labels/{$label->id}");
@@ -59,16 +59,16 @@ class LabelTest extends TestCase
             ->assertRedirect('/labels');
         $this->assertEquals($rowsCount, Label::query()->count());
     }
-    
-    public function test_user_can_not_delete_used_labels(): void
+
+    public function testUserCanNotDeleteUsedLabels(): void
     {
         $user = User::factory()->create();
         $label = Label::factory()->create();
         TaskStatus::factory()->create();
         Task::factory()->create();
-        
+
         $rowsCount = Label::query()->count();
-        
+
         $response = $this
             ->actingAs($user)
             ->delete("/labels/{$label->id}");
@@ -77,11 +77,11 @@ class LabelTest extends TestCase
             ->assertRedirect('/labels');
         $this->assertEquals($rowsCount, Label::query()->count());
     }
-    
-    public function test_guest_can_not_add_update_delete_labels(): void
+
+    public function testGuestCanNotAddUpdateDeleteLabels(): void
     {
         $rowsCount = Label::query()->count();
-        
+
         $response1 = $this->post('/labels', [
                 'name' => 'Label name',
             ]);
@@ -89,10 +89,10 @@ class LabelTest extends TestCase
             ->assertSessionHasNoErrors()
             ->assertRedirect('/login');
         $this->assertEquals($rowsCount, Label::query()->count());
-        
+
         $label = Label::factory()->create();
         $expexted = $label->name;
-        
+
         $response2 = $this->patch("/labels/{$label->id}", [
                 'name' => "$expexted new name",
             ]);
@@ -101,7 +101,7 @@ class LabelTest extends TestCase
             ->assertRedirect('/login');
         $label->refresh();
         $this->assertSame($expexted, $label->name);
-        
+
         $response3 = $this->delete("/labels/{$label->id}");
         $response3
             ->assertSessionHasNoErrors()

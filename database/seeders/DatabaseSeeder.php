@@ -19,14 +19,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(10)->create();
-        
+
         TaskStatus::updateOrCreate(['name' => 'новый']);
         TaskStatus::updateOrCreate(['name' => 'в работе']);
         TaskStatus::updateOrCreate(['name' => 'на тестировании']);
         TaskStatus::updateOrCreate(['name' => 'завершен']);
-        
+
         Label::factory(20)->create();
-        
+
         Task::factory(15)->create();
     }
 }

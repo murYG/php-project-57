@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('task_id')->references('id')->on('tasks');
             $table->foreignId('label_id')->references('id')->on('labels');
             $table->timestamps();
-        });        
+        });
     }
 
     /**

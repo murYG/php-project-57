@@ -12,31 +12,31 @@ use Tests\TestCase;
 class TaskTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     /**
      * A basic feature test example.
      */
-    public function test_tasks_page_is_displayed(): void
+    public function testTasksPageIsDisplayed(): void
     {
         User::factory()->create();
         TaskStatus::factory()->create();
-                
+
         $task = Task::factory()->create();
 
         $response1 = $this->get('/tasks');
         $response1->assertOk();
-        
+
         $response2 = $this->get("/tasks/{$task->id}");
         $response2->assertOk();
     }
-    
-    public function test_user_can_add_update_tasks(): void
+
+    public function testUserCanAddUpdateTasks(): void
     {
         $user = User::factory()->create();
         $task_status = TaskStatus::factory()->create();
-        
+
         $rowsCount = Task::query()->count();
-        
+
         $response1 = $this
             ->actingAs($user)
             ->post('/tasks', [
@@ -47,10 +47,10 @@ class TaskTest extends TestCase
             ->assertSessionHasNoErrors()
             ->assertRedirect('/tasks');
         $this->assertEquals($rowsCount + 1, Task::query()->count());
-        
+
         $task = Task::first();
         $expexted = "{$task->name} new name";
-        
+
         $response2 = $this
             ->actingAs($user)
             ->patch("/tasks/{$task->id}", [
@@ -63,8 +63,8 @@ class TaskTest extends TestCase
         $task->refresh();
         $this->assertSame($expexted, $task->name);
     }
-    
-    public function test_only_author_can_delete_task(): void
+
+    public function testOnlyAuthorCanDeleteTask(): void
     {
         $user1 = User::factory()->create();
         TaskStatus::factory()->create();
@@ -80,7 +80,7 @@ class TaskTest extends TestCase
             ->assertSessionHasNoErrors()
             ->assertRedirect('/tasks');
         $this->assertEquals($rowsCount, Task::query()->count());
-        
+
         $response2 = $this
             ->actingAs($user1)
             ->delete("/tasks/{$task->id}");
@@ -89,15 +89,15 @@ class TaskTest extends TestCase
             ->assertRedirect('/tasks');
         $this->assertEquals($rowsCount - 1, Task::query()->count());
     }
-    
-    public function test_guest_can_not_add_update_delete_tasks(): void
+
+    public function testGuestCanNotAddUpdateDeleteTasks(): void
     {
         User::factory()->create();
         TaskStatus::factory()->create();
         $task = Task::factory()->create();
-        
+
         $rowsCount = Task::query()->count();
-        
+
         $response1 = $this
             ->post('/tasks', [
                 'name' => 'Test',
@@ -108,7 +108,7 @@ class TaskTest extends TestCase
             ->assertSessionHasNoErrors()
             ->assertRedirect('/login');
         $this->assertEquals($rowsCount, Task::query()->count());
-        
+
         $expexted = "{$task->name} new name";
 
         $response2 = $this->patch("/tasks/{$task->id}", [
@@ -121,7 +121,7 @@ class TaskTest extends TestCase
             ->assertRedirect('/login');
         $task->refresh();
         $this->assertNotSame($expexted, $task->name);
-        
+
         $response3 = $this->delete("/tasks/{$task->id}");
         $response3
             ->assertSessionHasNoErrors()

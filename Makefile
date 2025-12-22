@@ -14,7 +14,7 @@ validate:
 	composer validate	
 
 lint:
-	composer exec --verbose phpcs -- --standard=PSR12 app routes
+	composer exec --verbose phpcs -- --standard=PSR12 app database tests routes
 
 start:
 	php artisan serve --host=0.0.0.0
