@@ -3,23 +3,23 @@
 return [
     'task_status' => [
         'id' => 'ID',
-        'name' => 'Name',
-        'created_at' => 'Created at'
+        'name' => 'Имя',
+        'created_at' => 'Дата создания'
     ],
     'task' => [
         'id' => 'ID',
-        'name' => 'Name',
-        'description' => 'Description',
-        'author' => 'Author',
-        'responsible' => 'Responsible',
-        'status' => 'Status', 
-        'labels' => 'Tags',
-        'created_at' => 'Created at'
+        'name' => 'Имя',
+        'description' => 'Описание',
+        'author' => 'Автор',
+        'responsible' => 'Исполнитель',
+        'status' => 'Статус', 
+        'labels' => 'Метки',
+        'created_at' => 'Дата создания'
     ],
     'label' => [
         'id' => 'ID',
-        'name' => 'Name',
-        'description' => 'Description',
+        'name' => 'Имя',
+        'description' => 'Описание',
         'created_at' => 'Дата создания'
     ]
 ];
