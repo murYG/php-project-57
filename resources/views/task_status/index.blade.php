@@ -51,7 +51,5 @@
                 @endforeach
             </tbody>
         </table>
-        
-        {{ $task_statuses->links() }}
     </div>
 </x-app-layout>
