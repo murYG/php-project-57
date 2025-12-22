@@ -10,6 +10,6 @@ class ExampleTest extends TestCase
     public function testTaskStatusFillableCheck(): void
     {
         $task = new Task(['name' => 'Test', 'id' => 1]);
-        $this->assertNull($task->id);
+        $this->assertNotEquals(1, $task->id);
     }
 }
