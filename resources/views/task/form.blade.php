@@ -12,9 +12,7 @@
     <label for="description">{{ __('models.task.description') }}</label>
 </div>
 <div>
-    <textarea class="rounded border-gray-300 w-1/3 h-32" name="description" id="description">
-        {{ old('description', $task->description) }}
-    </textarea>
+    <textarea class="rounded border-gray-300 w-1/3 h-32" name="description" id="description">{{ old('description', $task->description) }}</textarea>
     <x-input-error :messages="$errors->get('description')" class="mt-2" />
 </div>
 
@@ -36,7 +34,7 @@
 </div>
 
 <div>
-    <label for="assigned_to_id">{{ __('models.task.status') }}</label>
+    <label for="assigned_to_id">{{ __('models.task.responsible') }}</label>
 </div>
 <div>
     <select class="rounded border-gray-300 w-1/3" name="assigned_to_id" id="assigned_to_id">

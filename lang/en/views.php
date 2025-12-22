@@ -3,81 +3,81 @@
 return [
     'common' => [
         'actions' => [
-            'title' => 'Actions',
+            'title' => 'Действия',
             'actions' => [
-                'delete' => 'Delete',
-                'edit' => 'Edit',
+                'delete' => 'Удалить',
+                'edit' => 'Изменить',
             ],
         ],
     ],
     'index' => [
-        'title' => 'Hello from Hexlet!',
-        'content' => 'This is a simple task manager on Laravel',
+        'title' => 'Привет от Хекслета!',
+        'content' => 'Это простой менеджер задач на Laravel',
     ],
     'task_status' => [
         'index' => [
-            'title' => 'Statuses',            
-            'confirm_deletion' => 'Are you sure?',
+            'title' => 'Статусы',            
+            'confirm_deletion' => 'Вы уверены?',
             'buttons' => [
-                'create' => 'Create status'
+                'create' => 'Создать статус'
             ]
         ],
         'create' => [
-            'title' => 'Create status',
+            'title' => 'Создать статус',
             'buttons' => [
-                'create' => 'Create'
+                'create' => 'Создать'
             ]
         ],
         'edit' => [
-            'title' => 'Change of status',
+            'title' => 'Изменение статуса',
             'buttons' => [
-                'edit' => 'Update'
+                'edit' => 'Обновить'
             ]
         ]
     ],
     'task' => [
         'index' => [
-            'title' => 'Tasks',            
-            'confirm_deletion' => 'Are you sure?',
+            'title' => 'Задачи',            
+            'confirm_deletion' => 'Вы уверены?',
             'buttons' => [
-                'create' => 'Create task',
-                'filter' => 'Apply'
+                'create' => 'Создать задачу',
+                'filter' => 'Применить'
             ]
         ],
         'show' => [
-            'title' => 'View a task'
+            'title' => 'Просмотр задачи'
         ],        
         'create' => [
-            'title' => 'Create task',
+            'title' => 'Создать задачу',
             'buttons' => [
-                'create' => 'Create'
+                'create' => 'Создать'
             ]
         ],
         'edit' => [
-            'title' => 'Changing a task',
+            'title' => 'Изменение задачи',
             'buttons' => [
-                'edit' => 'Update'
+                'edit' => 'Обновить'
             ]
         ]
     ],
     'label' => [
         'index' => [
-            'title' => 'Labels',            
-            'confirm_deletion' => 'Are you sure?',
+            'title' => 'Метки',            
+            'confirm_deletion' => 'Вы уверены?',
             'buttons' => [
-                'create' => 'Create label'
+                'create' => 'Создать метку'
             ]
         ],
         'create' => [
-            'title' => 'Create label',
+            'title' => 'Создать метку',
             'buttons' => [
-                'create' => 'Create'
+                'create' => 'Создать'
             ]
         ],
         'edit' => [
-            'title' => 'Changing the label',
+            'title' => 'Изменение метки',
             'buttons' => [
-                'edit' => 'Update'
+                'edit' => 'Обновить'
             ]
         ]
     ],

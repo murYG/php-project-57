@@ -46,7 +46,7 @@
                         <td>{{ $task->created_at->format('d.m.Y') }}</td>
                         @auth
                         <td>
-                            @if (Auth::user()->id === $task->author->id)
+                            @can('destroy-task', $task)
                             <a class="text-red-600 hover:text-red-900" 
                                 href="{{ route('tasks.destroy', ['task' => $task]) }}" 
                                 onclick="event.preventDefault(); 
@@ -58,7 +58,7 @@
                                 @csrf
                                 @method('DELETE')
                             </form>
-                            @endif
+                            @endcan
                             <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task->id)}}">
                                 {{ __('views.common.actions.actions.edit') }}
                             </a>
