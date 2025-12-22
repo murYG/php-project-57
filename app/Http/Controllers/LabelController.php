@@ -34,6 +34,9 @@ class LabelController extends Controller
             [
                 'name' => 'required|unique:labels',
                 'description' => 'nullable|string'
+            ],
+            [
+                'name.unique' => __('validation.label.name.unique')
             ]
         );
 
@@ -68,6 +71,9 @@ class LabelController extends Controller
             [
                 'name' => 'required|unique:labels',
                 'description' => 'nullable|string'
+            ],
+            [
+                'name.unique' => __('validation.label.name.unique')
             ]
         );
 
