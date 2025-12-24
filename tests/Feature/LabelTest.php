@@ -77,8 +77,7 @@ class LabelTest extends TestCase
         Task::factory(15)->create();
 
         $user = User::inRandomOrder()->first();
-        $task = Task::inRandomOrder()->whereHas('labels')->with('labels')->first();
-        $label = $task->labels->first();
+        $label = Label::inRandomOrder()->whereHas('tasks')->with('tasks')->first();
 
         $rowsCount = Label::query()->count();
 
