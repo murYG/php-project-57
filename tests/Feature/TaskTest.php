@@ -72,9 +72,9 @@ class TaskTest extends TestCase
 
     public function testOnlyAuthorCanDeleteTask(): void
     {
-        $user1 = User::inRandomOrder()->whereHas('tasksByMe')->with('tasksByMe')->firstOrFail();
+        $task = Task::inRandomOrder()->with('author')->firstOrFail();
+        $user1 = $task->author;
         $user2 = User::where('id', '<>', $user1->id)->firstOrFail();
-        $task = $user1->tasksByMe->firstOrFail();
 
         $rowsCount = Task::query()->count();
 
