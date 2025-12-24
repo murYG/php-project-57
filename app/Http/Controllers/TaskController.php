@@ -7,12 +7,21 @@ use App\Models\TaskStatus;
 use App\Models\User;
 use App\Models\Label;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\TaskCreateUpdateRequest;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use Illuminate\Routing\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TaskController extends Controller
 {
+    use AuthorizesRequests;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Task::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -53,20 +62,21 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaskCreateUpdateRequest $request)
     {
-        $data = $request->validate(
-            [
-                'name' => 'required',
-                'status_id' => 'required',
-                'description' => 'nullable|string',
-                'assigned_to_id' => 'nullable|integer:users'
-            ]
-        );
+        $data = $request->validated();
 
         $task = new Task($data);
+        $task->created_by_id = auth()->id();
         $task->save();
-        $task->labels()->sync($request->input('labels'));
+
+        if (is_null($request->input('labels'))) {
+            $labels = [];
+        } else {
+            $labels = $request->input('labels');
+        }
+
+        $task->labels()->sync($labels);
 
         flash(__('flash.task.store_success'))->success();
 
@@ -96,20 +106,20 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(TaskCreateUpdateRequest $request, Task $task)
     {
-        $data = $request->validate(
-            [
-                'name' => 'required',
-                'status_id' => 'required',
-                'description' => 'nullable|string',
-                'assigned_to_id' => 'nullable|integer:users'
-            ]
-        );
+        $data = $request->validated();
 
         $task->fill($data);
         $task->save();
-        $task->labels()->sync($request->input('labels'));
+
+        if (is_null($request->input('labels'))) {
+            $labels = [];
+        } else {
+            $labels = $request->input('labels');
+        }
+
+        $task->labels()->sync($labels);
 
         flash(__('flash.task.update_success'))->success();
 
@@ -121,17 +131,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        if (!Gate::allows('destroy-task', $task)) {
-            flash(__('flash.task.destroy_auth_error'))->error();
-            return redirect()->route('tasks.index');
-        }
-
-        try {
-            $task->delete();
-            flash(__('flash.task.destroy_success'))->success();
-        } catch (\Exception $e) {
-            flash(__('flash.task.destroy_error'))->error();
-        }
+        $task->delete();
+        flash(__('flash.task.destroy_success'))->success();
 
         return redirect()->route('tasks.index');
     }

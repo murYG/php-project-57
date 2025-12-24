@@ -4,7 +4,12 @@ return [
     'task_status' => [
         'id' => 'ID',
         'name' => 'Имя',
-        'created_at' => 'Дата создания'
+        'created_at' => 'Дата создания',
+        'validation' => [
+            'name' => [
+                'unique' => 'Статус с таким именем уже существует'
+            ]
+        ]
     ],
     'task' => [
         'id' => 'ID',
@@ -20,6 +25,11 @@ return [
         'id' => 'ID',
         'name' => 'Имя',
         'description' => 'Описание',
-        'created_at' => 'Дата создания'
+        'created_at' => 'Дата создания',
+        'validation' => [
+            'name' => [
+                'unique' => 'Метка с таким именем уже существует'
+            ]
+        ]
     ]
 ];

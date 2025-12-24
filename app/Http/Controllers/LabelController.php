@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Label;
-use Illuminate\Http\Request;
+use App\Http\Requests\LabelCreateUpdateRequest;
+use Illuminate\Routing\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class LabelController extends Controller
 {
+    use AuthorizesRequests;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Label::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -28,30 +37,15 @@ class LabelController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LabelCreateUpdateRequest $request)
     {
-        $data = $request->validate(
-            [
-                'name' => 'required|unique:labels',
-                'description' => 'nullable|string'
-            ],
-            [
-                'name.unique' => __('validation.label.name.unique')
-            ]
-        );
+        $data = $request->validated();
 
         $label = new Label($data);
         $label->save();
         flash(__('flash.label.store_success'))->success();
 
         return redirect()->route('labels.index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Label $label)
-    {
     }
 
     /**
@@ -65,17 +59,9 @@ class LabelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Label $label)
+    public function update(LabelCreateUpdateRequest $request, Label $label)
     {
-        $data = $request->validate(
-            [
-                'name' => 'required|unique:labels',
-                'description' => 'nullable|string'
-            ],
-            [
-                'name.unique' => __('validation.label.name.unique')
-            ]
-        );
+        $data = $request->validated();
 
         $label->fill($data);
         $label->save();
@@ -89,11 +75,11 @@ class LabelController extends Controller
      */
     public function destroy(Label $label)
     {
-        try {
+        if ($label->tasks()->exists()) {
+            flash(__('flash.label.destroy_error'))->error();
+        } else {
             $label->delete();
             flash(__('flash.label.destroy_success'))->success();
-        } catch (\Exception $e) {
-            flash(__('flash.label.destroy_error'))->error();
         }
 
         return redirect()->route('labels.index');

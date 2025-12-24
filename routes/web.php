@@ -16,26 +16,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resources([
-        'task_statuses' => TaskStatusController::class,
-    ]);
-});
-Route::get('/task_statuses', [TaskStatusController::class, 'index'])->name('task_statuses.index');
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resources([
-        'tasks' => TaskController::class,
-    ]);
-});
-Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
-Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resources([
-        'labels' => LabelController::class,
-    ]);
-});
-Route::get('/labels', [LabelController::class, 'index'])->name('labels.index');
+Route::resources([
+    'task_statuses' => TaskStatusController::class,
+    'tasks' => TaskController::class,
+    'labels' => LabelController::class,
+]);
 
 require __DIR__ . '/auth.php';

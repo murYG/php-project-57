@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
-use Illuminate\Http\Request;
+use App\Http\Requests\TaskStatusCreateUpdateRequest;
+use Illuminate\Routing\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TaskStatusController extends Controller
 {
+    use AuthorizesRequests;
+
+    public function __construct()
+    {
+        $this->authorizeResource(TaskStatus::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -28,30 +37,15 @@ class TaskStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaskStatusCreateUpdateRequest $request)
     {
-        $data = $request->validate(
-            [
-                'name' => 'required|unique:task_statuses'
-            ],
-            [
-                'name.unique' => __('validation.task_status.name.unique')
-            ]
-        );
+        $data = $request->validated();
 
         $task_status = new TaskStatus($data);
         $task_status->save();
         flash(__('flash.task_status.store_success'))->success();
 
         return redirect()->route('task_statuses.index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(TaskStatus $taskStatus)
-    {
-        //
     }
 
     /**
@@ -65,16 +59,9 @@ class TaskStatusController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TaskStatus $task_status)
+    public function update(TaskStatusCreateUpdateRequest $request, TaskStatus $task_status)
     {
-        $data = $request->validate(
-            [
-                'name' => "required|unique:task_statuses,name,{$task_status->id}"
-            ],
-            [
-                'name.unique' => __('validation.task_status.name.unique')
-            ]
-        );
+        $data = $request->validated();
 
         $task_status->fill($data);
         $task_status->save();
@@ -88,11 +75,11 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $task_status)
     {
-        try {
+        if ($task_status->tasks()->exists()) {
+            flash(__('flash.task_status.destroy_error'))->error();
+        } else {
             $task_status->delete();
             flash(__('flash.task_status.destroy_success'))->success();
-        } catch (\Exception $e) {
-            flash(__('flash.task_status.destroy_error'))->error();
         }
 
         return redirect()->route('task_statuses.index');

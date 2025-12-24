@@ -100,7 +100,7 @@ return [
         'array' => 'The :attribute field must not have more than :max items.',
         'file' => 'The :attribute field must not be greater than :max kilobytes.',
         'numeric' => 'The :attribute field must not be greater than :max.',
-        'string' => 'The :attribute field must not be greater than :max characters.',
+        'string' => ':attribute не должно быть больше :max символов',
     ],
     'max_digits' => 'The :attribute field must not have more than :max digits.',
     'mimes' => 'The :attribute field must be a file of type: :values.',
@@ -196,24 +196,7 @@ return [
     */
 
     'attributes' => [
-        'password' => 'Пароль'
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Model Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    */
-
-    'task_status' => [
-        'name' => [
-            'unique' => 'Статус с таким именем уже существует'
-        ]
-    ],
-    'label' => [
-        'name' => [
-            'unique' => 'Метка с таким именем уже существует'
-        ]
+        'password' => 'Пароль',
+        'name' => 'Имя'
     ],
 ];

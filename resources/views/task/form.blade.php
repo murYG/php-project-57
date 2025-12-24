@@ -52,7 +52,7 @@
     <label for="labels">{{ __('models.task.labels') }}</label>
 </div>
 <div>
-    <select class="rounded border-gray-300 w-1/3 h-32" name="labels[]" id="labels[]" multiple="">
+    <select class="rounded border-gray-300 w-1/3 h-32" name="labels[]" id="labels" multiple="">
         @foreach ($labels as $label)
             <option value="{{ $label->id }}" @selected($task->labels->contains(old('labels', $label->id)))>
                 {{ $label->name }}

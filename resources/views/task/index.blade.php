@@ -27,9 +27,9 @@
                     <td>{{ __('models.task.author') }}</td>
                     <td>{{ __('models.task.responsible') }}</td>
                     <td>{{ __('models.task.created_at') }}</td>
-                    @auth
+                    @canany(['update', 'delete'], new \App\Models\Task())
                     <td>{{ __("views.common.actions.title") }}</td>
-                    @endauth
+                    @endcanany
                 </tr>
             </thead>
             <tbody>
@@ -44,9 +44,9 @@
                         <td>{{ $task->author->name }}</td>
                         <td>{{ $task->responsible->name ?? '' }}</td>
                         <td>{{ $task->created_at->format('d.m.Y') }}</td>
-                        @auth
+                        @canany(['update', 'delete'], $task)
                         <td>
-                            @can('destroy-task', $task)
+                            @can('delete', $task)
                             <a class="text-red-600 hover:text-red-900" 
                                 href="{{ route('tasks.destroy', ['task' => $task]) }}" 
                                 onclick="event.preventDefault(); 
@@ -63,7 +63,7 @@
                                 {{ __('views.common.actions.actions.edit') }}
                             </a>
                         </td>
-                        @endauth
+                        @endcanany
                     </tr>
                 @endforeach
             </tbody>

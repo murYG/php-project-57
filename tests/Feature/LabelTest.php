@@ -16,15 +16,24 @@ class LabelTest extends TestCase
 
     public function testLabelsPageIsDisplayed(): void
     {
-        Label::factory()->create();
+        Label::factory(20)->create();
+        User::factory(10)->create();
 
-        $response = $this->get('/labels');
-        $response->assertOk();
+        $response1 = $this->get('/labels');
+        $response1->assertOk();
+
+        $user = User::inRandomOrder()->first();
+        $response2 = $this
+            ->actingAs($user)
+            ->get('/labels');
+        $response2->assertOk();
     }
 
     public function testUserCanAddUpdateDeleteLabels(): void
     {
-        $user = User::factory()->create();
+        User::factory(10)->create();
+
+        $user = User::inRandomOrder()->first();
         $rowsCount = Label::query()->count();
 
         $response1 = $this
@@ -62,10 +71,14 @@ class LabelTest extends TestCase
 
     public function testUserCanNotDeleteUsedLabels(): void
     {
-        $user = User::factory()->create();
-        $label = Label::factory()->create();
-        TaskStatus::factory()->create();
-        Task::factory()->create();
+        User::factory(10)->create();
+        Label::factory(20)->create();
+        TaskStatus::factory(4)->create();
+        Task::factory(15)->create();
+
+        $user = User::inRandomOrder()->first();
+        $task = Task::inRandomOrder()->first();
+        $label = $task->labels->first();
 
         $rowsCount = Label::query()->count();
 
@@ -80,6 +93,8 @@ class LabelTest extends TestCase
 
     public function testGuestCanNotAddUpdateDeleteLabels(): void
     {
+        Label::factory(20)->create();
+
         $rowsCount = Label::query()->count();
 
         $response1 = $this->post('/labels', [
@@ -87,10 +102,10 @@ class LabelTest extends TestCase
             ]);
         $response1
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/login');
+            ->assertStatus(403);
         $this->assertEquals($rowsCount, Label::query()->count());
 
-        $label = Label::factory()->create();
+        $label = Label::inRandomOrder()->first();
         $expexted = $label->name;
 
         $response2 = $this->patch("/labels/{$label->id}", [
@@ -98,14 +113,14 @@ class LabelTest extends TestCase
             ]);
         $response2
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/login');
+            ->assertStatus(403);
         $label->refresh();
         $this->assertSame($expexted, $label->name);
 
         $response3 = $this->delete("/labels/{$label->id}");
         $response3
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/login');
-        $this->assertEquals($rowsCount + 1, Label::query()->count());
+            ->assertStatus(403);
+        $this->assertEquals($rowsCount, Label::query()->count());
     }
 }

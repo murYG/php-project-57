@@ -19,15 +19,6 @@ class Task extends Model
         'created_by_id'
     ];
 
-    public static function booted()
-    {
-        static::creating(function ($model) {
-            if (is_null($model->created_by_id)) {
-                $model->created_by_id = auth()->id();
-            }
-        });
-    }
-
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by_id', 'id');

@@ -19,9 +19,9 @@
                     <td>{{ __('models.label.name') }}</td>
                     <td>{{ __('models.label.description') }}</td>
                     <td>{{ __('models.label.created_at') }}</td>
-                    @auth
+                    @canany(['update', 'delete'], new \App\Models\Label())
                     <td>{{ __("views.common.actions.title") }}</td>
-                    @endauth
+                    @endcanany
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +31,7 @@
                         <td>{{ $label->name }}</td>
                         <td>{{ $label->description }}</td>
                         <td>{{ $label->created_at->format('d.m.Y') }}</td>
-                        @auth
+                        @canany(['update', 'delete'], $label)
                         <td>
                             <a class="text-red-600 hover:text-red-900" 
                                 href="{{ route('labels.destroy', ['label' => $label]) }}" 
@@ -48,7 +48,7 @@
                                 {{ __('views.common.actions.actions.edit') }}
                             </a>
                         </td>
-                        @endauth
+                        @endcanany
                     </tr>
                 @endforeach
             </tbody>

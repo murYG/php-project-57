@@ -15,7 +15,7 @@ class TaskStatusTest extends TestCase
 
     public function testTaskStatusesPageIsDisplayed(): void
     {
-        TaskStatus::factory()->create();
+        TaskStatus::factory(4)->create();
 
         $response = $this->get('/task_statuses');
         $response->assertOk();
@@ -23,7 +23,9 @@ class TaskStatusTest extends TestCase
 
     public function testUserCanAddUpdateDeleteTaskStatuses(): void
     {
-        $user = User::factory()->create();
+        User::factory(10)->create();
+
+        $user = User::inRandomOrder()->first();
         $rowsCount = TaskStatus::query()->count();
 
         $response1 = $this
@@ -61,15 +63,18 @@ class TaskStatusTest extends TestCase
 
     public function testUserCanNotDeleteUsedTaskStatuses(): void
     {
-        $user = User::factory()->create();
-        $task_status = TaskStatus::factory()->create();
-        $task = Task::factory()->create();
+        User::factory(10)->create();
+        TaskStatus::factory(4)->create();
+        Task::factory(15)->create();
+
+        $user = User::inRandomOrder()->first();
+        $task = Task::inRandomOrder()->first();
 
         $rowsCount = TaskStatus::query()->count();
 
         $response = $this
             ->actingAs($user)
-            ->delete("/task_statuses/{$task_status->id}");
+            ->delete("/task_statuses/{$task->status->id}");
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect('/task_statuses');
@@ -78,6 +83,8 @@ class TaskStatusTest extends TestCase
 
     public function testGuestCanNotAddUpdateDeleteTaskStatuses(): void
     {
+        TaskStatus::factory(4)->create();
+
         $rowsCount = TaskStatus::query()->count();
 
         $response1 = $this->post('/task_statuses', [
@@ -85,10 +92,10 @@ class TaskStatusTest extends TestCase
             ]);
         $response1
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/login');
+            ->assertStatus(403);
         $this->assertEquals($rowsCount, TaskStatus::query()->count());
 
-        $task_status = TaskStatus::factory()->create();
+        $task_status = TaskStatus::inRandomOrder()->first();
         $expexted = $task_status->name;
 
         $response2 = $this->patch("/task_statuses/{$task_status->id}", [
@@ -96,14 +103,14 @@ class TaskStatusTest extends TestCase
             ]);
         $response2
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/login');
+            ->assertStatus(403);
         $task_status->refresh();
         $this->assertSame($expexted, $task_status->name);
 
         $response3 = $this->delete("/task_statuses/{$task_status->id}");
         $response3
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/login');
-        $this->assertEquals($rowsCount + 1, TaskStatus::query()->count());
+            ->assertStatus(403);
+        $this->assertEquals($rowsCount, TaskStatus::query()->count());
     }
 }
