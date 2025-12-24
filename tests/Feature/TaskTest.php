@@ -74,9 +74,9 @@ class TaskTest extends TestCase
         TaskStatus::factory(4)->create();
         Task::factory(15)->create();
 
-        $task = Task::inRandomOrder()->whereHas('author')->with('author')->firstOrFail();
-        $user1 = $task->author;
-        $user2 = User::firstWhere('id', '<>', $user1->id);
+        $user1 = User::inRandomOrder()->whereHas('tasksByMe')->with('tasksByMe')->firstOrFail();
+        $user2 = User::where('id', '<>', $user1->id)->firstOrFail();
+        $task = $user1->tasksByMe->first();
 
         $rowsCount = Task::query()->count();
 

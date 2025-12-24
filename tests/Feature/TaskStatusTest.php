@@ -68,7 +68,7 @@ class TaskStatusTest extends TestCase
         Task::factory(15)->create();
 
         $user = User::inRandomOrder()->first();
-        $task_status = TaskStatus::inRandomOrder()->whereHas('tasks')->with('tasks')->firstorFail();
+        $task_status = TaskStatus::inRandomOrder()->whereHas('tasks')->with('tasks')->firstOrFail();
 
         $rowsCount = TaskStatus::query()->count();
 
