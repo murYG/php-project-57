@@ -13,15 +13,20 @@ class TaskTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        User::factory(10)->create();
+        TaskStatus::factory(4)->create();
+        Task::factory(15)->create();
+    }
+
     /**
      * A basic feature test example.
      */
     public function testTasksPageIsDisplayed(): void
     {
-        User::factory(10)->create();
-        TaskStatus::factory(4)->create();
-        Task::factory(15)->create();
-
         $task = Task::inRandomOrder()->first();
 
         $response1 = $this->get('/tasks');
@@ -33,9 +38,6 @@ class TaskTest extends TestCase
 
     public function testUserCanAddUpdateTasks(): void
     {
-        User::factory(10)->create();
-        TaskStatus::factory(4)->create();
-
         $user = User::inRandomOrder()->first();
         $task_status = TaskStatus::inRandomOrder()->first();
 
@@ -70,13 +72,9 @@ class TaskTest extends TestCase
 
     public function testOnlyAuthorCanDeleteTask(): void
     {
-        User::factory(10)->create();
-        TaskStatus::factory(4)->create();
-        Task::factory(15)->create();
-
         $user1 = User::inRandomOrder()->whereHas('tasksByMe')->with('tasksByMe')->firstOrFail();
         $user2 = User::where('id', '<>', $user1->id)->firstOrFail();
-        $task = $user1->tasksByMe->first();
+        $task = $user1->tasksByMe->firstOrFail();
 
         $rowsCount = Task::query()->count();
 
@@ -99,10 +97,6 @@ class TaskTest extends TestCase
 
     public function testGuestCanNotAddUpdateDeleteTasks(): void
     {
-        User::factory(10)->create();
-        TaskStatus::factory(4)->create();
-        Task::factory(15)->create();
-
         $task = Task::inRandomOrder()->first();
 
         $rowsCount = Task::query()->count();

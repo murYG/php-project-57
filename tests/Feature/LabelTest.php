@@ -14,11 +14,16 @@ class LabelTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testLabelsPageIsDisplayed(): void
+    public function setUp(): void
     {
+        parent::setUp();
+
         Label::factory(20)->create();
         User::factory(10)->create();
+    }
 
+    public function testLabelsPageIsDisplayed(): void
+    {
         $response1 = $this->get('/labels');
         $response1->assertOk();
 
@@ -31,8 +36,6 @@ class LabelTest extends TestCase
 
     public function testUserCanAddUpdateDeleteLabels(): void
     {
-        User::factory(10)->create();
-
         $user = User::inRandomOrder()->first();
         $rowsCount = Label::query()->count();
 
@@ -71,8 +74,6 @@ class LabelTest extends TestCase
 
     public function testUserCanNotDeleteUsedLabels(): void
     {
-        User::factory(10)->create();
-        Label::factory(20)->create();
         TaskStatus::factory(4)->create();
         Task::factory(15)->create();
 
@@ -92,8 +93,6 @@ class LabelTest extends TestCase
 
     public function testGuestCanNotAddUpdateDeleteLabels(): void
     {
-        Label::factory(20)->create();
-
         $rowsCount = Label::query()->count();
 
         $response1 = $this->post('/labels', [

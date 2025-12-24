@@ -13,18 +13,22 @@ class TaskStatusTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        TaskStatus::factory(20)->create();
+        User::factory(10)->create();
+    }
+
     public function testTaskStatusesPageIsDisplayed(): void
     {
-        TaskStatus::factory(4)->create();
-
         $response = $this->get('/task_statuses');
         $response->assertOk();
     }
 
     public function testUserCanAddUpdateDeleteTaskStatuses(): void
     {
-        User::factory(10)->create();
-
         $user = User::inRandomOrder()->first();
         $rowsCount = TaskStatus::query()->count();
 
@@ -63,8 +67,6 @@ class TaskStatusTest extends TestCase
 
     public function testUserCanNotDeleteUsedTaskStatuses(): void
     {
-        User::factory(10)->create();
-        TaskStatus::factory(4)->create();
         Task::factory(15)->create();
 
         $user = User::inRandomOrder()->first();
@@ -83,8 +85,6 @@ class TaskStatusTest extends TestCase
 
     public function testGuestCanNotAddUpdateDeleteTaskStatuses(): void
     {
-        TaskStatus::factory(4)->create();
-
         $rowsCount = TaskStatus::query()->count();
 
         $response1 = $this->post('/task_statuses', [
