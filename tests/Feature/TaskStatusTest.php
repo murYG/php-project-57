@@ -69,12 +69,13 @@ class TaskStatusTest extends TestCase
 
         $user = User::inRandomOrder()->first();
         $task = Task::inRandomOrder()->first();
+        $task_status = $task->status;
 
         $rowsCount = TaskStatus::query()->count();
 
         $response = $this
             ->actingAs($user)
-            ->delete("/task_statuses/{$task->status->id}");
+            ->delete("/task_statuses/{$task_status->id}");
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect('/task_statuses');
