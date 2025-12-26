@@ -75,7 +75,8 @@ class TaskController extends Controller
         $task->created_by_id = $currentUser->id;
         $task->save();
 
-        $task->labels()->sync($request->input('labels'));
+        $labels = $request->input('labels') ?? [];
+        $task->labels()->sync($labels);
 
         flash(__('flash.task.store_success'))->success();
 
@@ -112,7 +113,8 @@ class TaskController extends Controller
         $task->fill($data);
         $task->save();
 
-        $task->labels()->sync($request->input('labels'));
+        $labels = $request->input('labels') ?? [];
+        $task->labels()->sync($labels);
 
         flash(__('flash.task.update_success'))->success();
 
