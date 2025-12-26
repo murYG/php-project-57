@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @method static \Illuminate\Database\Eloquent\Builder|static labels()
+ */
 class Task extends Model
 {
     use HasFactory;

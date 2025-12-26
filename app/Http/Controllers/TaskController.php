@@ -73,13 +73,7 @@ class TaskController extends Controller
         $task = $currentUser->tasksByMe()->make($data);
         $task->save();
 
-        if (is_null($request->input('labels'))) {
-            $labels = [];
-        } else {
-            $labels = $request->input('labels');
-        }
-
-        $task->labels()->sync($labels);
+        $task->labels()->sync($request->input('labels'));
 
         flash(__('flash.task.store_success'))->success();
 
