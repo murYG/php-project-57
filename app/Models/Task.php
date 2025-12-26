@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * @method static \Illuminate\Database\Eloquent\Model|static labels()
+ * @method static \Illuminate\Database\Eloquent\Model|static labels
  */
 class Task extends Model
 {
