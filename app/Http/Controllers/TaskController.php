@@ -12,6 +12,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -27,8 +28,6 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $statuses = TaskStatus::all();
-        $users = User::all();
         $filter = array_merge(
             array_fill_keys(['status_id', 'created_by_id', 'assigned_to_id'], null),
             $request->get('filter') ?? []
@@ -44,6 +43,8 @@ class TaskController extends Controller
                 ->paginate()
                 ->withQueryString();
 
+        $statuses = TaskStatus::pluck('name', 'id');
+        $users = User::pluck('name', 'id');
         return view('task.index', compact('tasks', 'statuses', 'users', 'filter'));
     }
 
@@ -53,9 +54,11 @@ class TaskController extends Controller
     public function create()
     {
         $task = new Task();
-        $statuses = TaskStatus::all();
-        $users = User::all();
-        $labels = Label::all();
+
+        $statuses = TaskStatus::pluck('name', 'id');
+        $users = User::pluck('name', 'id');
+        $labels = Label::pluck('name', 'id');
+
         return view('task.create', compact('task', 'statuses', 'users', 'labels'));
     }
 
@@ -66,8 +69,8 @@ class TaskController extends Controller
     {
         $data = $request->validated();
 
-        $task = new Task($data);
-        $task->created_by_id = auth()->id();
+        $currentUser = Auth::user();
+        $task = $currentUser->tasksByMe()->make($data);
         $task->save();
 
         if (is_null($request->input('labels'))) {
@@ -96,9 +99,9 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        $statuses = TaskStatus::all();
-        $users = User::all();
-        $labels = Label::all();
+        $statuses = TaskStatus::pluck('name', 'id');
+        $users = User::pluck('name', 'id');
+        $labels = Label::pluck('name', 'id');
 
         return view('task.edit', compact('task', 'statuses', 'users', 'labels'));
     }
@@ -113,13 +116,7 @@ class TaskController extends Controller
         $task->fill($data);
         $task->save();
 
-        if (is_null($request->input('labels'))) {
-            $labels = [];
-        } else {
-            $labels = $request->input('labels');
-        }
-
-        $task->labels()->sync($labels);
+        $task->labels()->sync($request->input('labels'));
 
         flash(__('flash.task.update_success'))->success();
 
@@ -131,7 +128,9 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        $task->labels()->detach();
         $task->delete();
+
         flash(__('flash.task.destroy_success'))->success();
 
         return redirect()->route('tasks.index');

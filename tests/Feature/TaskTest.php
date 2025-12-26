@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\Task;
 use App\Models\TaskStatus;
+use App\Models\Label;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -19,6 +20,7 @@ class TaskTest extends TestCase
 
         User::factory(10)->create();
         TaskStatus::factory(4)->create();
+        Label::factory(20)->create();
         Task::factory(15)->create();
     }
 
@@ -73,6 +75,8 @@ class TaskTest extends TestCase
     public function testOnlyAuthorCanDeleteTask(): void
     {
         $task = Task::inRandomOrder()->with('author')->firstOrFail();
+        $task->labels()->detach();
+
         $user1 = $task->author;
         $user2 = User::factory()->create();
 
@@ -98,6 +102,7 @@ class TaskTest extends TestCase
     public function testGuestCanNotAddUpdateDeleteTasks(): void
     {
         $task = Task::inRandomOrder()->first();
+        $task->labels()->detach();
 
         $rowsCount = Task::query()->count();
 
@@ -130,5 +135,49 @@ class TaskTest extends TestCase
             ->assertSessionHasNoErrors()
             ->assertStatus(403);
         $this->assertEquals($rowsCount, Task::query()->count());
+    }
+
+    public function testTaskWithLabels(): void
+    {
+        $task = Task::inRandomOrder()->first();
+        $user = $task->author;
+
+        $expected1 = Label::limit(5)->orderBy('id')->pluck('id')->toArray();
+        $response1 = $this->actingAs($user)->patch("/tasks/{$task->id}", [
+                'name' => $task->name,
+                'status_id' => $task->status_id,
+                'labels' => $expected1
+            ]);
+        $response1->assertValid();
+
+        $task->refresh();
+        $result1 = $task->labels()->orderBy('labels.id')->pluck('labels.id')->toArray();
+        $this->assertEquals($expected1, $result1);
+
+        $expected2 = [];
+        $response2 = $this->actingAs($user)->patch("/tasks/{$task->id}", [
+                'name' => $task->name,
+                'status_id' => $task->status_id,
+                'labels' => null
+            ]);
+        $response2->assertValid();
+
+        $task->refresh();
+        $result2 = $task->labels()->orderBy('labels.id')->pluck('labels.id')->toArray();
+        $this->assertEquals($expected2, $result2);
+
+        $response3 = $this->actingAs($user)->patch("/tasks/{$task->id}", [
+                'name' => $task->name,
+                'status_id' => $task->status_id,
+                'labels' => [null, 'smth', 1]
+            ]);
+        $response3->assertInvalid(['labels.0', 'labels.1']);
+
+        $response4 = $this->actingAs($user)->patch("/tasks/{$task->id}", [
+                'name' => $task->name,
+                'status_id' => $task->status_id,
+                'labels' => [1, 10000]
+            ]);
+        $response4->assertInvalid(['labels.1']);
     }
 }

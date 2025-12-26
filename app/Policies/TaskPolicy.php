@@ -27,31 +27,31 @@ class TaskPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(?User $user): bool
     {
-        return true;
+        return !is_null($user);
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Task $task): bool
+    public function update(?User $user, Task $task): bool
     {
-        return true;
+        return !is_null($user);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Task $task): bool
+    public function delete(?User $user, Task $task): bool
     {
-        return $task->author->is($user);
+        return !is_null($user) && $task->author->is($user);
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Task $task): bool
+    public function restore(?User $user, Task $task): bool
     {
         return false;
     }
@@ -59,7 +59,7 @@ class TaskPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Task $task): bool
+    public function forceDelete(?User $user, Task $task): bool
     {
         return false;
     }

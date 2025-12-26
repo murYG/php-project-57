@@ -20,7 +20,8 @@ class TaskCreateUpdateRequest extends FormRequest
             'status_id' => 'required',
             'description' => 'nullable|string',
             'assigned_to_id' => 'nullable|integer:users',
-            'labels' => 'nullable|array'
+            'labels' => 'nullable|array',
+            'labels.*' => 'integer|exists:App\Models\Label,id'
         ];
     }
 }

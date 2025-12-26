@@ -29,8 +29,8 @@ class TaskFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (\App\Models\Task $task) {
-            $lebels = \App\Models\Label::inRandomOrder()->limit(fake()->numberBetween(1, 7))->get();
-            $task->labels()->attach($lebels);
+            $labels = \App\Models\Label::inRandomOrder()->limit(fake()->numberBetween(1, 7))->pluck('id');
+            $task->labels()->sync($labels);
         });
     }
 }
