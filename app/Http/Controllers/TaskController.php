@@ -70,7 +70,9 @@ class TaskController extends Controller
         $data = $request->validated();
 
         $currentUser = Auth::user();
-        $task = $currentUser->tasksByMe()->with('labels')->make($data);
+        //$task = $currentUser->tasksByMe()->make($data);
+        $task = new Task($data);
+        $task->created_by_id = $currentUser->id;
         $task->save();
 
         $task->labels()->sync($request->input('labels'));
