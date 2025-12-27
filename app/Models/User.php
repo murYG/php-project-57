@@ -48,6 +48,7 @@ class User extends Authenticatable
         ];
     }
 
+    /** @return HasMany<Task> */
     public function tasksForMe(): HasMany
     {
         return $this->hasMany(Task::class, 'assigned_to_id');

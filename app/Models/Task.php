@@ -19,21 +19,25 @@ class Task extends Model
         'created_by_id'
     ];
 
+    /** @return BelongsTo<User> */
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /** @return BelongsTo<User> */
     public function assignedTo(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /** @return BelongsTo<TaskStatus> */
     public function status(): BelongsTo
     {
         return $this->belongsTo(TaskStatus::class);
     }
 
+    /** @return BelongsToMany<Label> */
     public function labels(): BelongsToMany
     {
         return $this->belongsToMany(Label::class, 'task_label');

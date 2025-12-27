@@ -14,6 +14,7 @@ class TaskStatus extends Model
         'name',
     ];
 
+    /** @return HasMany<Task> */
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class, 'status_id');

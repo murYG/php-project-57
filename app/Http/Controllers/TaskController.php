@@ -71,9 +71,6 @@ class TaskController extends Controller
 
         $currentUser = Auth::user();
         $task = $currentUser->tasksByMe()->create($data);
-        //$task = new Task($data);
-        //$task->created_by_id = $currentUser->id;
-        //$task->save();
 
         $labels = $request->input('labels') ?? [];
         $task->labels()->sync($labels);
