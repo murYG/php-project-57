@@ -53,6 +53,7 @@ class User extends Authenticatable
         return $this->hasMany(Task::class, 'assigned_to_id');
     }
 
+    /** @return HasMany<Task> */
     public function tasksByMe(): HasMany
     {
         return $this->hasMany(Task::class, 'created_by_id');
