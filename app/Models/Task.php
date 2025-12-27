@@ -34,6 +34,7 @@ class Task extends Model
         return $this->belongsTo(TaskStatus::class);
     }
 
+    /** @return belongsToMany<Label> */ 
     public function labels(): BelongsToMany
     {
         return $this->belongsToMany(Label::class, 'task_label');
