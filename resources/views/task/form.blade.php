@@ -34,7 +34,7 @@
 </div>
 
 <div>
-    <label for="assigned_to_id">{{ __('models.task.responsible') }}</label>
+    <label for="assigned_to_id">{{ __('models.task.assignedTo') }}</label>
 </div>
 <div>
     <select class="rounded border-gray-300 w-1/3" name="assigned_to_id" id="assigned_to_id">

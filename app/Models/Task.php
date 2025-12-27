@@ -19,19 +19,19 @@ class Task extends Model
         'created_by_id'
     ];
 
-    public function author(): BelongsTo
+    public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by_id', 'id');
+        return $this->belongsTo(User::class);
     }
 
-    public function responsible(): BelongsTo
+    public function assignedTo(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'assigned_to_id', 'id');
+        return $this->belongsTo(User::class);
     }
 
     public function status(): BelongsTo
     {
-        return $this->belongsTo(TaskStatus::class, 'status_id', 'id');
+        return $this->belongsTo(TaskStatus::class);
     }
 
     public function labels(): BelongsToMany

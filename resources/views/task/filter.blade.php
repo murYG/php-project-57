@@ -10,7 +10,7 @@
         </x-select>
         
         <x-select name="filter[created_by_id]" id="filter[created_by_id]">
-            <option value="" @selected($filter['created_by_id'] == null)>{{ __('models.task.author') }}</option>
+            <option value="" @selected($filter['created_by_id'] == null)>{{ __('models.task.createdBy') }}</option>
             @foreach ($users as $id => $name)
                 <option value="{{ $id }}" @selected($filter['created_by_id'] == $id)>
                     {{ $name }}
@@ -19,7 +19,7 @@
         </x-select>
         
         <x-select name="filter[assigned_to_id]" id="filter[assigned_to_id]">
-            <option value="" @selected($filter['assigned_to_id'] == null)>{{ __('models.task.author') }}</option>
+            <option value="" @selected($filter['assigned_to_id'] == null)>{{ __('models.task.createdBy') }}</option>
             @foreach ($users as $id => $name)
                 <option value="{{ $id }}" @selected($filter['assigned_to_id'] == $id)>
                     {{ $name }}

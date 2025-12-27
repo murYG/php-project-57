@@ -9,13 +9,13 @@
                 @include('task.filter')
             </div>
 
-            @auth
+            @can('create', new \App\Models\Task())
             <div class="ml-auto">
                 <a href="{{ route('tasks.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
                     {{ __("views.task.index.buttons.create") }}
                 </a>
             </div>
-            @endauth
+            @endcan
         </div>
 
         <table class="mt-4">
@@ -24,8 +24,8 @@
                     <td>{{ __('models.task.id') }}</td>
                     <td>{{ __('models.task.status') }}</td>
                     <td>{{ __('models.task.name') }}</td>
-                    <td>{{ __('models.task.author') }}</td>
-                    <td>{{ __('models.task.responsible') }}</td>
+                    <td>{{ __('models.task.createdBy') }}</td>
+                    <td>{{ __('models.task.assignedTo') }}</td>
                     <td>{{ __('models.task.created_at') }}</td>
                     @canany(['update', 'delete'], new \App\Models\Task())
                     <td>{{ __("views.common.actions.title") }}</td>
@@ -41,8 +41,8 @@
                             <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.show', $task->id) }}">
                                 {{ $task->name }}
                             </a>
-                        <td>{{ $task->author->name }}</td>
-                        <td>{{ $task->responsible->name ?? '' }}</td>
+                        <td>{{ $task->createdBy->name }}</td>
+                        <td>{{ $task->assignedTo->name ?? '' }}</td>
                         <td>{{ $task->created_at->format('d.m.Y') }}</td>
                         @canany(['update', 'delete'], $task)
                         <td>

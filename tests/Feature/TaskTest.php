@@ -74,10 +74,10 @@ class TaskTest extends TestCase
 
     public function testOnlyAuthorCanDeleteTask(): void
     {
-        $task = Task::inRandomOrder()->with('author')->firstOrFail();
+        $task = Task::inRandomOrder()->with('createdBy')->firstOrFail();
         $task->labels()->detach();
 
-        $user1 = $task->author;
+        $user1 = $task->createdBy;
         $user2 = User::factory()->create();
 
         $rowsCount = Task::query()->count();
@@ -140,7 +140,7 @@ class TaskTest extends TestCase
     public function testTaskWithLabels(): void
     {
         $task = Task::inRandomOrder()->first();
-        $user = $task->author;
+        $user = $task->createdBy;
 
         $expected1 = Label::limit(5)->orderBy('id')->pluck('id')->toArray();
         $response1 = $this->actingAs($user)->patch("/tasks/{$task->id}", [

@@ -15,8 +15,8 @@ return [
         'id' => 'ID',
         'name' => 'Имя',
         'description' => 'Описание',
-        'author' => 'Автор',
-        'responsible' => 'Исполнитель',
+        'createdBy' => 'Автор',
+        'assignedTo' => 'Исполнитель',
         'status' => 'Статус',
         'labels' => 'Метки',
         'created_at' => 'Дата создания'

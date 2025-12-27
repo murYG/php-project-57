@@ -45,7 +45,7 @@ class TaskPolicy
      */
     public function delete(?User $user, Task $task): bool
     {
-        return !is_null($user) && $task->author->is($user);
+        return !is_null($user) && $task->createdBy->is($user);
     }
 
     /**

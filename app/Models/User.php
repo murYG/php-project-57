@@ -50,11 +50,11 @@ class User extends Authenticatable
 
     public function tasksForMe(): HasMany
     {
-        return $this->hasMany(Task::class, 'assigned_to_id', 'id');
+        return $this->hasMany(Task::class, 'assigned_to_id');
     }
 
     public function tasksByMe(): HasMany
     {
-        return $this->hasMany(Task::class, 'created_by_id', 'id');
+        return $this->hasMany(Task::class, 'created_by_id');
     }
 }

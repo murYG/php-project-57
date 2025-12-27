@@ -33,7 +33,7 @@ class TaskController extends Controller
             $request->get('filter') ?? []
         );
 
-        $taskQuery = Task::with('status', 'author', 'responsible')->orderBy('id');
+        $taskQuery = Task::with('status', 'createdBy', 'assignedTo')->orderBy('id');
         $tasks = QueryBuilder::for($taskQuery)
                 ->allowedFilters([
                     AllowedFilter::exact('status_id'),
@@ -70,9 +70,9 @@ class TaskController extends Controller
         $data = $request->validated();
 
         $currentUser = Auth::user();
-        //$task = $currentUser->tasksByMe()->make($data);
-        $task = new Task($data);
-        $task->created_by_id = $currentUser->id;
+        $task = $currentUser->tasksByMe()->create($data);
+        //$task = new Task($data);
+        //$task->created_by_id = $currentUser->id;
         $task->save();
 
         $labels = $request->input('labels') ?? [];
